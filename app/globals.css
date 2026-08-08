@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.hero-title {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  font-family: "Bodoni Moda", "Didot", "Times New Roman", serif;
+  font-size: clamp(5rem, 10vw, 11rem);
+  font-weight: 500;
+  line-height: 0.72;
+  letter-spacing: -0.065em;
+
+  color: #ffd400;
+  text-align: center;
+  text-transform: uppercase;
+
+  text-shadow: 6px 7px 0 rgba(0, 45, 25, 0.9);
+}
+
+.hero-title span {
+  display: block;
+  width: max-content;
+  transform: scaleX(1.12);
+}
