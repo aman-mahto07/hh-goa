@@ -1,64 +1,81 @@
-import './BuilderCard.css';
+"use client";
 
-export default function BuilderCard() {
+import "./BuilderCard.css";
+import BuilderBody from "./body/BuilderBody";
+
+interface BuilderCardProps {
+  name: string;
+  role: string;
+  mode: string;
+  builderId: string;
+  photo?: string;
+}
+
+export default function BuilderCard({
+  name,
+  role,
+  mode,
+  builderId,
+  photo,
+}: BuilderCardProps) {
   return (
     <div className="builder-card">
 
-      {/* =================================================
-          HEADER
-      ================================================= */}
-
+      {/* HEADER */}
       <header className="builder-card-header">
 
-        {/* Lanyard slot */}
         <div className="card-hole" />
 
-        {/* Top-left identity */}
         <div className="header-brand">
           <span>HH</span>
           <span>GOA</span>
           <span>'26</span>
         </div>
 
-        {/* Top-right date */}
         <div className="header-date">
           <span>28 — 31</span>
           <span>OCT</span>
           <span>2026</span>
         </div>
 
-        {/* Location */}
         <div className="header-location">
           GOA,
           <br />
           INDIA
         </div>
 
-        {/* Main title */}
         <div className="header-title">
-
           <div>HACKER</div>
-
           <div>HOUSE</div>
 
-          {/* Goa sticker */}
           <span className="header-goa">
-            गोवा 2026
+            गोवा  2026
           </span>
-
         </div>
 
       </header>
 
+
+      {/* BUILDER PASS */}
       <div className="builder-pass-strip">
-  <span className="pass-star">✦</span>
+        <span>✦</span>
+        OFFICIAL BUILDER PASS
+        <span>✦</span>
+      </div>
 
-  <span className="pass-text">
-    OFFICIAL BUILDER PASS
-  </span>
 
-  <span className="pass-star">✦</span>
-</div>
+      {/* BODY */}
+      <BuilderBody
+        name={name}
+        role={role}
+        mode={mode}
+        builderId={builderId}
+        photo={photo}
+      />
+
+
+      {/* FOOTER SPACE */}
+      <div className="builder-card-footer-space" />
 
     </div>
   );

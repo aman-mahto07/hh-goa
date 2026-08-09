@@ -1,15 +1,26 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import BuilderCard from '@/components/card/BuilderCard';
-import './generator.css';
+import { useState } from "react";
+import BuilderCard from "@/components/card/BuilderCard";
+import "./generator.css";
 
 export default function GeneratorPage() {
-  const [name, setName] = useState('');
-  const [role, setRole] = useState('');
-  const [mode, setMode] = useState('FULL STACK BUILDER');
-  const [builderId] = useState('HH-GOA-26-0000');
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [mode, setMode] = useState("NIGHT OWL");
+  const [modeOpen, setModeOpen] = useState(false);
+
+  const [builderId] = useState("HH-GOA-26-0000");
   const [photo, setPhoto] = useState<string | undefined>();
+
+  const builderModes = [
+    "NIGHT OWL",
+    "MAVERICK",
+    "CODE NOMAD",
+    "CHAOS BUILDER",
+    "IDEA MACHINE",
+    "BREAK → FIX → SHIP",
+  ];
 
   const handlePhotoUpload = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -24,7 +35,7 @@ export default function GeneratorPage() {
   };
 
   return (
-    <main className="generator-page">
+    <main>
 
       {/* =================================================
           FIXED BACKGROUND
@@ -127,7 +138,9 @@ export default function GeneratorPage() {
               </div>
 
 
-              {/* NAME */}
+              {/* =================================================
+                  NAME
+              ================================================= */}
 
               <div className="form-field">
 
@@ -148,7 +161,9 @@ export default function GeneratorPage() {
               </div>
 
 
-              {/* ROLE */}
+              {/* =================================================
+                  ROLE
+              ================================================= */}
 
               <div className="form-field">
 
@@ -169,52 +184,85 @@ export default function GeneratorPage() {
               </div>
 
 
-              {/* BUILDER MODE */}
+              {/* =================================================
+                  BUILDER MODE
+              ================================================= */}
 
-              <div className="form-field">
+              <div className="form-field builder-mode-field">
 
-                <label htmlFor="builder-mode">
+                <label>
                   BUILDER MODE
                 </label>
 
-                <select
-                  id="builder-mode"
-                  value={mode}
-                  onChange={(event) =>
-                    setMode(event.target.value)
-                  }
-                >
+                <div className="builder-mode-select">
 
-                  <option value="FULL STACK BUILDER">
-                    FULL STACK BUILDER
-                  </option>
+                  <button
+                    type="button"
+                    className={`builder-mode-trigger ${
+                      modeOpen ? "is-open" : ""
+                    }`}
+                    onClick={() =>
+                      setModeOpen((open) => !open)
+                    }
+                  >
 
-                  <option value="AI BUILDER">
-                    AI BUILDER
-                  </option>
+                    <span className="mode-symbol">
+                      ◈
+                    </span>
 
-                  <option value="FRONTEND BUILDER">
-                    FRONTEND BUILDER
-                  </option>
+                    <span className="mode-selected">
+                      {mode}
+                    </span>
 
-                  <option value="BACKEND BUILDER">
-                    BACKEND BUILDER
-                  </option>
+                    <span className="mode-arrow">
+                      {modeOpen ? "▴" : "▾"}
+                    </span>
 
-                  <option value="HARDWARE BUILDER">
-                    HARDWARE BUILDER
-                  </option>
+                  </button>
 
-                  <option value="PRODUCT BUILDER">
-                    PRODUCT BUILDER
-                  </option>
 
-                </select>
+                  {modeOpen && (
+                    <div className="builder-mode-options">
+
+                      {builderModes.map((builderMode) => (
+
+                        <button
+                          key={builderMode}
+                          type="button"
+                          className={`builder-mode-option ${
+                            mode === builderMode
+                              ? "selected"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            setMode(builderMode);
+                            setModeOpen(false);
+                          }}
+                        >
+
+                          <span className="mode-option-symbol">
+                            ◈
+                          </span>
+
+                          <span>
+                            {builderMode}
+                          </span>
+
+                        </button>
+
+                      ))}
+
+                    </div>
+                  )}
+
+                </div>
 
               </div>
 
 
-              {/* PHOTO */}
+              {/* =================================================
+                  PHOTO
+              ================================================= */}
 
               <div className="form-field">
 
@@ -256,7 +304,9 @@ export default function GeneratorPage() {
               </div>
 
 
-              {/* GENERATE */}
+              {/* =================================================
+                  GENERATE
+              ================================================= */}
 
               <button
                 type="button"
@@ -288,7 +338,15 @@ export default function GeneratorPage() {
               </div>
 
 
-              <BuilderCard/>
+              {/* BUILDER CARD */}
+
+              <BuilderCard
+                name={name}
+                role={role}
+                mode={mode}
+                builderId={builderId}
+                photo={photo}
+              />
 
 
               <p className="preview-note">

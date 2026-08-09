@@ -1,0 +1,292 @@
+/* =========================================================
+   BUILDER BODY
+========================================================= */
+
+.builder-body {
+  position: relative;
+
+  width: 100%;
+  height: 250px;
+
+  margin: 0;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background-image: url("/images/card-body-bg.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: #063b26;
+}
+
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+.builder-photo {
+  position: absolute;
+
+  left: 48px;
+  top: 40px;
+
+  width: 145px;
+  height: 155px;
+
+  margin: 0;
+  padding: 0;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  background: transparent;
+
+  transform: rotate(-5deg);
+  transform-origin: center;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   UPLOADED PHOTO
+========================================================= */
+
+.builder-photo-image {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  width: 95%;
+  height: 95%;
+
+  margin: 0;
+
+  display: block;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-1deg);
+
+  object-fit: cover;
+  object-position: center;
+
+  filter: saturate(0.92);
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   PHOTO FRAME
+========================================================= */
+
+.builder-photo::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  border: 1px solid rgba(6, 59, 38, 0.28);
+
+  pointer-events: none;
+
+  z-index: 5;
+}
+
+
+/* =========================================================
+   APPROVED STAMP
+========================================================= */
+
+.approved-stamp {
+  position: absolute;
+
+  /*
+    Body coordinates.
+    This intentionally overlaps the photo
+    and spills onto the cream area.
+  */
+
+  left: 125px;
+  top: 130px;
+
+  width: 82px;
+  height: 82px;
+
+  margin: 0;
+  padding: 0;
+
+  object-fit: contain;
+
+  transform: rotate(-10deg);
+
+  opacity: 0.92;
+
+  pointer-events: none;
+
+  z-index: 20;
+}
+
+
+/* =========================================================
+   BUILDER IDENTITY
+========================================================= */
+
+.builder-identity {
+  position: absolute;
+
+  left: 218px;
+  top: 38px;
+
+  width: 250px;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  color: #063b26;
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   IDENTITY ROW
+========================================================= */
+
+.identity-row {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 0 8px 0;
+  padding: 0 0 7px 0;
+
+  border-bottom: 1px dashed rgba(6, 59, 38, 0.4);
+}
+
+
+/* =========================================================
+   LABEL
+========================================================= */
+
+.identity-label {
+  display: block;
+
+  margin: 0 0 3px 0;
+
+  font-family: "Space Mono", monospace;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.13em;
+
+  color: #d92d68;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   VALUE
+========================================================= */
+
+.identity-value {
+  display: block;
+
+  font-family: "Space Mono", monospace;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.025em;
+
+  color: #063b26;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.identity-name {
+  font-size: 19px;
+
+  line-height: 1;
+
+  letter-spacing: 0.015em;
+}
+
+
+/* =========================================================
+   MODE
+========================================================= */
+
+.identity-mode {
+  display: inline-block;
+
+  width: fit-content;
+
+  padding: 4px 7px;
+
+  background: #e6bd18;
+
+  color: #063b26;
+
+  font-size: 11px;
+
+  line-height: 1;
+
+  letter-spacing: 0.035em;
+
+  box-shadow:
+    2px 2px 0 rgba(6, 59, 38, 0.18);
+
+  transform: rotate(-1deg);
+}
+
+
+/* =========================================================
+   VIBE
+========================================================= */
+
+.identity-vibe {
+  margin-bottom: 0;
+
+  padding-bottom: 0;
+
+  border-bottom: none;
+}
+
+.identity-vibe .identity-label {
+  color: #063b26;
+}
+
+.identity-vibe .identity-value {
+  font-size: 12px;
+}
+
+.identity-vibe b {
+  color: #ed2b68;
+
+  padding: 0 3px;
+}
