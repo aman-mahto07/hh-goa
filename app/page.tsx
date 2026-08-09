@@ -27,7 +27,7 @@ export default function Home() {
         {/* RIGHT SIDE */}
         <div className="nav-right">
 
-          <a href="#generator">
+          <a href="/generator">
             BUILD YOUR ID ↗
           </a>
 
@@ -98,9 +98,9 @@ export default function Home() {
 
 
         <div className="hero-cta">
-  <button className="pass-button">
-    GET YOUR PASS <span>↗</span>
-  </button>
+      <a href="/generator" className="pass-button">
+          GET YOUR PASS <span>↗</span>
+      </a>
 </div>
       </div>
 

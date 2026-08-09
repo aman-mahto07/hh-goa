@@ -1,0 +1,934 @@
+/* =========================================================
+   GENERATOR PAGE
+========================================================= */
+
+.generator-page {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  color: #fff5d6;
+
+  font-family: 'Space Mono', monospace;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   FIXED BACKGROUND
+========================================================= */
+
+.generator-background {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 0;
+
+  background:
+    linear-gradient(
+      rgba(2, 45, 28, 0.52),
+      rgba(2, 45, 28, 0.52)
+    ),
+    url('/images/goa-bg.png');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.generator-navbar {
+  position: sticky;
+
+  top: 0;
+
+  width: 100%;
+  height: 60px;
+
+  padding: 0 1.75rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  z-index: 1000;
+
+  background: rgba(3, 45, 28, 0.34);
+
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+
+  border-bottom:
+    1px solid rgba(255, 245, 214, 0.20);
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================================================
+   NAVBAR LEFT
+========================================================= */
+
+.generator-nav-left {
+  display: flex;
+  align-items: center;
+}
+
+
+.generator-brand {
+  color: #ffd400;
+
+  text-decoration: none;
+
+  font-family: 'Space Mono', monospace;
+
+  font-size: 0.7rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+
+.generator-brand:hover {
+  opacity: 0.75;
+}
+
+
+/* =========================================================
+   NAVBAR RIGHT
+========================================================= */
+
+.generator-nav-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 1.5rem;
+}
+
+
+.generator-nav-right a {
+  position: relative;
+
+  color: #fff5d6;
+
+  text-decoration: none;
+
+  font-family: 'Space Mono', monospace;
+
+  font-size: 0.62rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.1em;
+}
+
+
+.generator-nav-right a:hover {
+  color: #ffd400;
+}
+
+
+.generator-nav-right a::after {
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+  bottom: -5px;
+
+  width: 100%;
+  height: 1px;
+
+  background: #ffd400;
+
+  transform: scaleX(0);
+
+  transform-origin: right;
+
+  transition: transform 0.25s ease;
+}
+
+
+.generator-nav-right a:hover::after {
+  transform: scaleX(1);
+
+  transform-origin: left;
+}
+
+
+/* =========================================================
+   SCROLLING CONTENT
+========================================================= */
+
+.generator-content {
+  position: relative;
+
+  z-index: 1;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+========================================================= */
+
+.generator-container {
+  width: min(1180px, 92%);
+
+  margin: 0 auto;
+
+  padding-top: 4.5rem;
+  padding-bottom: 6rem;
+}
+
+
+/* =========================================================
+   GENERATOR HEADER
+========================================================= */
+
+.generator-header {
+  width: 100%;
+
+  text-align: center;
+}
+
+
+.generator-eyebrow {
+  margin: 0 0 1.5rem;
+
+  color: #ffd400;
+
+  font-size: 0.62rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.22em;
+
+  text-transform: uppercase;
+}
+
+
+.generator-title {
+  margin: 0;
+
+  color: #ffd400;
+
+  font-family:
+    'Bodoni Moda',
+    'Didot',
+    'Times New Roman',
+    serif;
+
+  font-size: clamp(3.8rem, 7vw, 7rem);
+
+  font-weight: 500;
+
+  line-height: 0.82;
+
+  letter-spacing: -0.055em;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    4px 5px 0 rgba(0, 45, 25, 0.8);
+}
+
+
+.generator-title span {
+  display: block;
+}
+
+
+.generator-description {
+  margin: 1.5rem 0 0;
+
+  color: rgba(255, 245, 214, 0.82);
+
+  font-size: 0.68rem;
+
+  letter-spacing: 0.08em;
+}
+
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.generator-workspace {
+  width: 100%;
+
+  margin-top: 4rem;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 0.9fr)
+    minmax(0, 1.1fr);
+
+  gap: 2rem;
+
+  align-items: start;
+}
+
+
+/* =========================================================
+   PANELS
+   IMPORTANT:
+   No box around YOUR DETAILS / LIVE PREVIEW.
+========================================================= */
+
+.builder-panel,
+.preview-panel {
+  position: relative;
+
+  width: 100%;
+
+  min-width: 0;
+
+  padding: 0;
+
+  background: transparent;
+
+  border: none;
+
+  box-shadow: none;
+
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-header {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 0.75rem;
+
+  padding-bottom: 1.25rem;
+
+  margin-bottom: 2rem;
+
+  border-bottom:
+    1px solid rgba(255, 245, 214, 0.18);
+}
+
+
+/* =========================================================
+   PANEL NUMBER
+========================================================= */
+
+.panel-number {
+  width: 27px;
+  height: 27px;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 212, 0, 0.65);
+
+  color: #ffd400;
+
+  font-size: 0.55rem;
+}
+
+
+/* =========================================================
+   PANEL TITLE
+========================================================= */
+
+.panel-title {
+  color: #fff5d6;
+
+  font-size: 0.63rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.15em;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+
+.form-field label {
+  display: block;
+
+  margin-bottom: 0.55rem;
+
+  color: #ffd400;
+
+  font-size: 0.56rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   FORM INPUTS
+========================================================= */
+
+.form-field input,
+.form-field select {
+  display: block;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  outline: none;
+
+  border:
+    1px solid rgba(255, 245, 214, 0.3);
+
+  background:
+    rgba(0, 0, 0, 0.16);
+
+  color: #fff5d6;
+
+  font-family: 'Space Mono', monospace;
+
+  font-size: 0.68rem;
+}
+
+
+.form-field input {
+  height: 48px;
+
+  padding: 0 1rem;
+}
+
+
+.form-field select {
+  height: 48px;
+
+  padding: 0 1rem;
+
+  cursor: pointer;
+}
+
+
+.form-field input::placeholder {
+  color:
+    rgba(255, 245, 214, 0.38);
+}
+
+
+.form-field input:focus,
+.form-field select:focus {
+  border-color: #ffd400;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 212, 0, 0.07);
+}
+
+
+.form-field select option {
+  background: #063b26;
+
+  color: #fff5d6;
+}
+
+
+/* =========================================================
+   PHOTO
+========================================================= */
+
+.photo-dropzone {
+  width: 100%;
+
+  min-height: 155px;
+
+  padding: 1.5rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.45rem;
+
+  border:
+    1px dashed rgba(255, 245, 214, 0.38);
+
+  background:
+    rgba(0, 0, 0, 0.12);
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+
+.photo-dropzone:hover {
+  border-color: #ffd400;
+
+  background:
+    rgba(255, 212, 0, 0.04);
+}
+
+
+.upload-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid rgba(255, 212, 0, 0.6);
+
+  color: #ffd400;
+}
+
+
+.upload-title {
+  color: #fff5d6;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size: 0.58rem;
+}
+
+
+.upload-subtitle {
+  color:
+    rgba(255, 245, 214, 0.5);
+
+  font-size: 0.5rem;
+}
+
+
+.upload-formats {
+  color:
+    rgba(255, 245, 214, 0.32);
+
+  font-size: 0.45rem;
+}
+
+
+/* =========================================================
+   GENERATE BUTTON
+========================================================= */
+
+.generate-id-button {
+  width: 100%;
+
+  min-height: 52px;
+
+  margin-top: 0.4rem;
+
+  border: 2px solid #000;
+
+  background: #ff197f;
+
+  color: #fff5d6;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size: 0.66rem;
+
+  letter-spacing: 0.12em;
+
+  cursor: pointer;
+
+  box-shadow:
+    5px 5px 0 #fff5d6;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.generate-id-button span {
+  display: inline-block;
+
+  margin-left: 0.4rem;
+}
+
+
+.generate-id-button:hover {
+  transform:
+    translate(2px, 2px);
+
+  box-shadow:
+    3px 3px 0 #fff5d6;
+}
+
+
+/* =========================================================
+   PREVIEW PANEL
+========================================================= */
+
+.preview-panel {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+/*
+   The new BuilderCard controls its own size.
+   Don't force width/height from the generator.
+*/
+
+.preview-panel > .builder-card {
+  flex-shrink: 0;
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   OLD PREVIEW SUPPORT
+   Kept only in case any old markup still exists.
+========================================================= */
+
+.builder-card-preview {
+  width: min(100%, 380px);
+
+  aspect-ratio: 3 / 4;
+
+  margin: 0 auto;
+
+  padding: 1.4rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #fff5d6;
+
+  color: #06452a;
+
+  border:
+    3px solid #06452a;
+
+  box-shadow:
+    9px 9px 0 #ff197f;
+}
+
+
+.card-topline {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding-bottom: 0.65rem;
+
+  border-bottom:
+    1px solid rgba(6, 69, 42, 0.25);
+
+  font-size: 0.45rem;
+
+  font-weight: 700;
+}
+
+
+.card-title {
+  margin-top: 1rem;
+
+  text-align: center;
+
+  line-height: 0.72;
+}
+
+
+.card-hacker,
+.card-house {
+  display: block;
+
+  font-family:
+    'Bodoni Moda',
+    serif;
+
+  font-size:
+    clamp(2rem, 4vw, 3.1rem);
+
+  letter-spacing: -0.07em;
+}
+
+
+.card-goa {
+  display: inline-block;
+
+  margin-top: 0.25rem;
+
+  padding:
+    0.12rem 0.35rem;
+
+  background: #ff197f;
+
+  color: #fff5d6;
+
+  font-family:
+    'Rozha One',
+    serif;
+
+  font-size: 0.8rem;
+
+  transform:
+    rotate(-3deg);
+}
+
+
+.card-photo {
+  flex: 1;
+
+  min-height: 170px;
+
+  margin: 1.25rem 0 1rem;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  background: #d8d3c1;
+
+  border:
+    2px solid #06452a;
+}
+
+
+.card-photo-placeholder {
+  color:
+    rgba(6, 69, 42, 0.45);
+
+  font-size: 0.55rem;
+}
+
+
+.card-identity {
+  padding-bottom: 0.9rem;
+
+  border-bottom:
+    1px solid rgba(6, 69, 42, 0.25);
+}
+
+
+.card-name {
+  color: #06452a;
+
+  font-family:
+    'Archivo Black',
+    sans-serif;
+
+  font-size: 1rem;
+
+  text-transform: uppercase;
+}
+
+
+.card-role {
+  margin-top: 0.3rem;
+
+  color:
+    rgba(6, 69, 42, 0.65);
+
+  font-size: 0.5rem;
+
+  letter-spacing: 0.08em;
+}
+
+
+.card-footer {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding-top: 0.75rem;
+
+  font-size: 0.43rem;
+
+  font-weight: 700;
+}
+
+
+.preview-note {
+  margin-top: 1.5rem;
+
+  text-align: center;
+
+  color:
+    rgba(255, 245, 214, 0.42);
+
+  font-size: 0.5rem;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .generator-container {
+    width: 90%;
+
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+  }
+
+
+  .generator-title {
+    font-size:
+      clamp(3rem, 14vw, 5rem);
+  }
+
+
+  .generator-workspace {
+    grid-template-columns: 1fr;
+
+    gap: 3rem;
+
+    margin-top: 3rem;
+  }
+
+
+  /*
+     Panels remain completely borderless
+     on mobile as well.
+  */
+
+  .builder-panel,
+  .preview-panel {
+    position: relative;
+
+    width: 100%;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: none;
+
+    box-shadow: none;
+
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+
+  .panel-header {
+    width: 100%;
+
+    margin-bottom: 2rem;
+
+    padding-bottom: 1.1rem;
+  }
+
+
+  .preview-panel {
+    align-items: center;
+  }
+
+
+  .preview-panel > .builder-card {
+    max-width: 100%;
+  }
+
+
+  .builder-card-preview {
+    width: 100%;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+  .generator-navbar {
+    padding: 0 1rem;
+  }
+
+
+  .generator-brand {
+    font-size: 0.58rem;
+  }
+
+
+  .generator-nav-right {
+    gap: 0.75rem;
+  }
+
+
+  .generator-nav-right a {
+    font-size: 0.48rem;
+  }
+
+
+  .generator-container {
+    width: 92%;
+  }
+
+
+  .generator-title {
+    font-size: 3.3rem;
+  }
+
+
+  .panel-header {
+    gap: 0.6rem;
+
+    margin-bottom: 1.5rem;
+  }
+
+
+  .panel-number {
+    width: 25px;
+    height: 25px;
+  }
+
+
+  .panel-title {
+    font-size: 0.58rem;
+  }
+}

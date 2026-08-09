@@ -67,15 +67,17 @@ body {
 
   z-index: 100;
 
-  background: rgba(5, 55, 35, 0.58);
+  /* Subtle glass */
+  background: rgba(3, 45, 28, 0.38);
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
 
-  border-bottom: 1px solid rgba(255, 245, 214, 0.16);
+  /* Thin editorial edge */
+  border-bottom: 1px solid rgba(255, 245, 214, 0.25);
 
   box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.12);
+    0 4px 18px rgba(0, 0, 0, 0.08);
 
   font-family: 'Space Mono', monospace;
 }
@@ -89,8 +91,17 @@ body {
   display: flex;
   align-items: center;
 
-  gap: 0.8rem;
+  gap: 0.85rem;
+
+  height: 100%;
+
+  padding-right: 1.1rem;
+
+  border-right: 1px solid rgba(255, 245, 214, 0.3);
 }
+
+
+/* Studio logo */
 
 .studio-logo {
   width: 42px;
@@ -101,12 +112,15 @@ body {
   display: block;
 }
 
+
+/* HH GOA '26 */
+
 .nav-brand {
   color: #ffd400;
 
   font-family: 'Space Mono', monospace;
 
-  font-size: 0.72rem;
+  font-size: 0.7rem;
 
   font-weight: 700;
 
@@ -124,8 +138,11 @@ body {
   display: flex;
   align-items: center;
 
-  gap: 1.8rem;
+  gap: 1.4rem;
 }
+
+
+/* All navbar links */
 
 .nav-right a {
   position: relative;
@@ -136,7 +153,7 @@ body {
 
   font-family: 'Space Mono', monospace;
 
-  font-size: 0.65rem;
+  font-size: 0.62rem;
 
   font-weight: 700;
 
@@ -144,17 +161,60 @@ body {
 
   text-transform: uppercase;
 
-  transition: color 0.2s ease;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.nav-right a:hover {
+
+/* =========================================================
+   PRIMARY NAV — BUILD YOUR ID
+========================================================= */
+
+.nav-right a:first-child {
+  padding: 0.42rem 0.7rem;
+
+  border: 1px solid rgba(255, 212, 0, 0.75);
+
+  color: #ffd400;
+
+  background: rgba(255, 212, 0, 0.03);
+}
+
+
+/* Primary hover */
+
+.nav-right a:first-child:hover {
+  color: #06351f;
+
+  background: #ffd400;
+
+  border-color: #ffd400;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   HHGOA LINK
+========================================================= */
+
+.nav-right a:last-child {
+  color: #fff5d6;
+}
+
+.nav-right a:last-child:hover {
   color: #ffd400;
 }
 
 
-/* Navbar underline */
+/* =========================================================
+   SUBTLE UNDERLINE FOR HHGOA
+========================================================= */
 
-.nav-right a::after {
+.nav-right a:last-child::after {
   content: '';
 
   position: absolute;
@@ -174,7 +234,7 @@ body {
   transition: transform 0.25s ease;
 }
 
-.nav-right a:hover::after {
+.nav-right a:last-child:hover::after {
   transform: scaleX(1);
 
   transform-origin: left;
@@ -273,14 +333,13 @@ body {
 
 
 /* =========================================================
-   GOA 2026
+   GOA 2026 BADGE
 ========================================================= */
 
 .goa-badge {
   position: absolute;
 
   top: -0.45em;
-
   left: 50%;
 
   transform:
@@ -344,7 +403,7 @@ body {
 
 
 /* =========================================================
-   CTA CONTAINER
+   CTA
 ========================================================= */
 
 .hero-cta {
@@ -386,7 +445,7 @@ body {
 
 
 /* =========================================================
-   GET YOUR PASS BUTTON
+   GET YOUR PASS
 ========================================================= */
 
 .pass-button {
@@ -406,7 +465,7 @@ body {
 
   padding: 0.95rem 1.6rem;
 
-  border: 1.5px solid #fff5d6;
+  border: 2px solid #000;
 
   background: #ff197f;
 
@@ -426,8 +485,6 @@ body {
 
   cursor: pointer;
 
-  /* Offset printed/sticker edge */
-
   box-shadow:
     5px 5px 0 #fff5d6,
     0 0 22px rgba(255, 25, 127, 0.22);
@@ -439,7 +496,7 @@ body {
 }
 
 
-/* Arrow */
+/* CTA arrow */
 
 .pass-button span {
   display: inline-block;
@@ -455,7 +512,7 @@ body {
 }
 
 
-/* Hover */
+/* CTA hover */
 
 .pass-button:hover {
   background: #ff3b91;
@@ -467,13 +524,12 @@ body {
     0 0 28px rgba(255, 25, 127, 0.28);
 }
 
-
 .pass-button:hover span {
   transform: translate(3px, -3px);
 }
 
 
-/* Click */
+/* CTA active */
 
 .pass-button:active {
   transform: translate(5px, 5px);
@@ -506,26 +562,35 @@ body {
     padding: 0 1rem;
   }
 
+  .nav-left {
+    gap: 0.6rem;
+
+    padding-right: 0.75rem;
+  }
+
   .studio-logo {
     width: 38px;
-
     height: 38px;
   }
 
-  .nav-left {
-    gap: 0.6rem;
-  }
-
   .nav-brand {
-    font-size: 0.6rem;
+    font-size: 0.58rem;
+
+    letter-spacing: 0.08em;
   }
 
   .nav-right {
-    gap: 1rem;
+    gap: 0.7rem;
   }
 
   .nav-right a {
-    font-size: 0.5rem;
+    font-size: 0.47rem;
+
+    letter-spacing: 0.06em;
+  }
+
+  .nav-right a:first-child {
+    padding: 0.35rem 0.45rem;
   }
 
 
