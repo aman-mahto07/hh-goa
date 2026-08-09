@@ -33,6 +33,20 @@ export default function BuilderBody({
 
       </div>
 
+      <div className="builder-photo">
+  {photo && (
+    <img
+      src={photo}
+      alt="Builder"
+      className="builder-photo-image"
+    />
+  )}
+</div>
+
+<div className="photo-hashtag">
+  #FRAMEINGOA
+</div>
+
 
       {/* APPROVED STAMP */}
 
