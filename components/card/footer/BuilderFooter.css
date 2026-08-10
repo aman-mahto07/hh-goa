@@ -1,0 +1,608 @@
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.builder-footer {
+  --forest: #063b26;
+  --pink: #d93461;
+  --cream: #f1e4c2;
+
+  position: relative;
+
+  width: 100%;
+  height: 170px;
+
+  overflow: hidden;
+
+  flex-shrink: 0;
+
+  background: var(--cream);
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.builder-footer-bg {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-image: url("/images/footer-bg.png");
+
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  z-index: 0;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.builder-footer-content {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   BUILDER ID PLATE
+========================================================= */
+
+.footer-id {
+  position: absolute;
+
+  top: 24px;
+  left: 28px;
+
+  width: 145px;
+  height: 90px;
+
+  padding: 10px 11px 9px;
+
+  display: flex;
+  flex-direction: column;
+
+  border: 2px solid rgba(217, 52, 97, 0.7);
+
+  background: rgba(241, 228, 194, 0.10);
+
+  z-index: 5;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BUILDER ID LABEL
+========================================================= */
+
+.footer-label {
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.16em;
+
+  color: var(--pink);
+}
+
+
+/* =========================================================
+   BUILDER ID NUMBER
+========================================================= */
+
+.footer-number {
+  margin-top: 5px;
+  padding: 0;
+
+  font-family: var(--font-bebas), sans-serif;
+
+  font-size: 21px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: 0.045em;
+
+  color: var(--forest);
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BARCODE
+========================================================= */
+
+.footer-barcode {
+  display: flex;
+
+  align-items: stretch;
+
+  gap: 1.5px;
+
+  width: 128px;
+  height: 31px;
+
+  margin-top: 9px;
+  padding: 0;
+
+  overflow: hidden;
+}
+
+
+.footer-barcode i {
+  display: block;
+
+  width: 2px;
+  height: 100%;
+
+  margin: 0;
+  padding: 0;
+
+  background: var(--forest);
+
+  flex-shrink: 0;
+}
+
+
+.footer-barcode i:nth-child(2n) {
+  width: 3px;
+}
+
+.footer-barcode i:nth-child(3n) {
+  width: 1px;
+}
+
+.footer-barcode i:nth-child(5n) {
+  width: 3px;
+}
+
+.footer-barcode i:nth-child(7n) {
+  width: 2px;
+}
+
+
+/* =========================================================
+   QR SECTION
+========================================================= */
+
+.footer-qr {
+  position: absolute;
+
+  top: 17px;
+  right: 13px;
+
+  width: 150px;
+  height: 132px;
+
+  margin: 0;
+  padding: 0;
+
+  z-index: 6;
+}
+
+
+/* =========================================================
+   QR MESSAGE
+========================================================= */
+
+.qr-copy {
+  position: absolute;
+
+  top: 2px;
+  left: 30px;
+
+  display: flex;
+  flex-direction: column;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1.25;
+
+  letter-spacing: 0.04em;
+
+  color: var(--forest);
+}
+
+
+.qr-copy span {
+  display: block;
+
+  margin: 0;
+  padding: 0;
+}
+
+
+/* =========================================================
+   LIGHTNING
+========================================================= */
+
+.qr-bolt {
+  position: absolute;
+
+  top: 4px;
+  right: 8px;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 21px;
+
+  line-height: 1;
+
+  color: var(--pink);
+
+  transform: rotate(-8deg);
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   PINK STAR
+========================================================= */
+
+.qr-star {
+  position: absolute;
+
+  top: 45px;
+  left: 25px;
+
+  margin: 0;
+  padding: 0;
+
+  font-size: 10px;
+
+  line-height: 1;
+
+  color: var(--pink);
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   SCAN TO CONNECT
+========================================================= */
+
+.qr-scan {
+  position: absolute;
+
+  left: 20px;
+  top: 60px;
+
+  margin: 0;
+  padding: 0;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.04em;
+
+  color: var(--forest);
+
+  writing-mode: vertical-rl;
+
+  transform: rotate(180deg);
+
+  z-index: 4;
+}
+
+
+/* =========================================================
+   QR BOX
+========================================================= */
+
+.qr-box {
+  position: absolute;
+
+  top: 40px;
+  right: 30px;
+
+  width: 73px;
+  height: 73px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0;
+
+  border: 1px solid rgba(6, 59, 38, 0.5);
+
+  background: rgba(241, 228, 194, 0.18);
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   QR INNER FRAME
+========================================================= */
+
+.qr-box::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 4px;
+
+  border: 1px dashed rgba(6, 59, 38, 0.25);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   QR PLACEHOLDER
+========================================================= */
+
+.qr-box span {
+  position: relative;
+
+  z-index: 2;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.08em;
+
+  color: var(--forest);
+}
+
+
+/* =========================================================
+   #FRAMEINGOA WATERMARK
+========================================================= */
+
+.footer-watermark {
+  position: absolute;
+
+  left: 50%;
+  bottom: 42px;
+
+  transform: translateX(-50%);
+
+  font-family: var(--font-bebas), sans-serif;
+
+  font-size: 25px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: 0.18em;
+
+  color: var(--forest);
+
+  opacity: 0.11;
+
+  white-space: nowrap;
+
+  pointer-events: none;
+
+  z-index: 2;
+}
+
+/* =========================================================
+   EVENT INFO
+========================================================= */
+
+.footer-event-info {
+  position: absolute;
+
+  left: 50%;
+  bottom: 34px;
+
+  transform: translateX(-50%);
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.14em;
+
+  color: var(--forest);
+
+  opacity: 0.58;
+
+  white-space: nowrap;
+
+  z-index: 4;
+}
+
+
+/* =========================================================
+   INFORMATION STRIP
+========================================================= */
+
+.footer-info-strip {
+  position: absolute;
+
+  left: 205px;
+  right: 168px;
+
+  bottom: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  z-index: 7;
+}
+
+
+.footer-info-line {
+  flex: 1;
+
+  height: 1px;
+
+  border-top: 1px dashed rgba(6, 59, 38, 0.35);
+}
+
+
+.footer-info-text {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.13em;
+
+  color: var(--forest);
+
+  white-space: nowrap;
+
+  opacity: 0.7;
+}
+
+
+.footer-info-text b {
+  font-size: 9px;
+
+  color: var(--pink);
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   AUTHENTICITY MARK
+========================================================= */
+
+.footer-auth-mark {
+  position: absolute;
+
+  right: 185px;
+  bottom: 9px;
+
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(6, 59, 38, 0.35);
+
+  border-radius: 50%;
+
+  transform: rotate(-7deg);
+
+  color: var(--forest);
+
+  opacity: 0.48;
+
+  z-index: 7;
+}
+
+
+.footer-auth-mark::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 3px;
+
+  border: 1px dashed rgba(6, 59, 38, 0.35);
+
+  border-radius: 50%;
+}
+
+
+.auth-top,
+.auth-main,
+.auth-bottom {
+  position: relative;
+
+  z-index: 2;
+
+  font-family: var(--font-space), sans-serif;
+
+  line-height: 1;
+}
+
+
+.auth-top {
+  font-size: 4px;
+
+  letter-spacing: 0.12em;
+}
+
+
+.auth-main {
+  margin: 2px 0;
+
+  font-family: var(--font-bebas), sans-serif;
+
+  font-size: 11px;
+
+  letter-spacing: 0.08em;
+}
+
+
+.auth-bottom {
+  font-size: 4px;
+
+  letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+.builder-footer *,
+.builder-footer *::before,
+.builder-footer *::after {
+  box-sizing: border-box;
+}
