@@ -6,6 +6,7 @@
   --forest: #063b26;
   --pink: #d93461;
   --cream: #f1e4c2;
+  --yellow: #e5b900;
 
   position: relative;
 
@@ -111,7 +112,6 @@
 
 .footer-number {
   margin-top: 5px;
-  padding: 0;
 
   font-family: var(--font-bebas), sans-serif;
 
@@ -143,7 +143,6 @@
   height: 31px;
 
   margin-top: 9px;
-  padding: 0;
 
   overflow: hidden;
 }
@@ -154,9 +153,6 @@
 
   width: 2px;
   height: 100%;
-
-  margin: 0;
-  padding: 0;
 
   background: var(--forest);
 
@@ -182,6 +178,333 @@
 
 
 /* =========================================================
+   PROOF OF WORK
+========================================================= */
+
+.footer-proof {
+  position: absolute;
+
+  top: 18px;
+  left: 178px;
+
+  width: 190px;
+  height: 125px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 8;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   PROOF TITLE
+========================================================= */
+
+.proof-title {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 14px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  margin: 0;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.07em;
+
+  color: var(--pink);
+
+  white-space: nowrap;
+
+  z-index: 2;
+}
+
+
+.proof-title span {
+  font-size: 7px;
+
+  color: var(--pink);
+}
+
+
+/* =========================================================
+   PIN STACK
+========================================================= */
+
+.proof-grid {
+  position: absolute;
+
+  top: 14px;
+  left: 0;
+
+  width: 100%;
+  height: 111px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 3px;
+}
+
+
+/* =========================================================
+   BASE PROOF PIN
+========================================================= */
+
+.proof-pin {
+  position: relative;
+
+  width: 180px;
+
+  height: 24px;
+  min-height: 24px;
+  max-height: 24px;
+
+  flex: 0 0 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 2px 8px;
+
+  background: var(--forest);
+
+  border: 1px solid rgba(229, 185, 0, 0.8);
+
+  color: var(--cream);
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+
+/* =========================================================
+   TICKET NOTCHES
+========================================================= */
+
+.proof-pin::before,
+.proof-pin::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--cream);
+
+  transform: translateY(-50%);
+}
+
+.proof-pin::before {
+  left: -4px;
+}
+
+.proof-pin::after {
+  right: -4px;
+}
+
+
+/* =========================================================
+   PIN ICON
+========================================================= */
+
+.proof-pin-icon {
+  width: 19px;
+  height: 19px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: var(--pink);
+
+  font-size: 10px;
+
+  line-height: 1;
+
+  transition:
+    width 0.2s ease,
+    height 0.2s ease,
+    font-size 0.2s ease;
+}
+
+
+/* =========================================================
+   PIN LABEL
+========================================================= */
+
+.proof-pin-label {
+  min-width: 0;
+
+  overflow: hidden;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: 0.045em;
+
+  color: var(--cream);
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+
+  transition:
+    font-size 0.2s ease,
+    letter-spacing 0.2s ease;
+}
+
+
+/* =========================================================
+   1 PIN
+   Larger + comfortable
+========================================================= */
+
+.footer-proof-1 .proof-pin {
+  width: 180px;
+
+  height: 29px;
+  min-height: 29px;
+  max-height: 29px;
+
+  flex-basis: 29px;
+
+  padding: 3px 9px;
+}
+
+.footer-proof-1 .proof-pin-icon {
+  width: 21px;
+  height: 21px;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   2 PINS
+   Comfortable stack
+========================================================= */
+
+.footer-proof-2 .proof-pin {
+  width: 180px;
+
+  height: 27px;
+  min-height: 27px;
+  max-height: 27px;
+
+  flex-basis: 27px;
+
+  padding: 3px 8px;
+}
+
+
+/* =========================================================
+   3 PINS
+   Slightly tighter
+========================================================= */
+
+.footer-proof-3 .proof-pin {
+  width: 180px;
+
+  height: 25px;
+  min-height: 25px;
+  max-height: 25px;
+
+  flex-basis: 25px;
+
+  padding: 2px 8px;
+}
+
+.footer-proof-3 .proof-pin-icon {
+  width: 19px;
+  height: 19px;
+
+  font-size: 10px;
+}
+
+
+/* =========================================================
+   4 PINS
+   Compact but still readable
+========================================================= */
+
+.footer-proof-4 .proof-pin {
+  width: 180px;
+
+  height: 23px;
+  min-height: 23px;
+  max-height: 23px;
+
+  flex: 0 0 23px;
+
+  padding: 2px 8px;
+
+  gap: 7px;
+}
+
+
+.footer-proof-4 .proof-pin-icon {
+  width: 18px;
+  height: 18px;
+
+  font-size: 9px;
+}
+
+
+.footer-proof-4 .proof-pin-label {
+  font-size: 7.5px;
+
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
    QR SECTION
 ========================================================= */
 
@@ -197,7 +520,7 @@
   margin: 0;
   padding: 0;
 
-  z-index: 6;
+  z-index: 12;
 }
 
 
@@ -214,9 +537,6 @@
   display: flex;
   flex-direction: column;
 
-  margin: 0;
-  padding: 0;
-
   font-family: var(--font-space), sans-serif;
 
   font-size: 8px;
@@ -232,9 +552,6 @@
 
 .qr-copy span {
   display: block;
-
-  margin: 0;
-  padding: 0;
 }
 
 
@@ -247,9 +564,6 @@
 
   top: 4px;
   right: 8px;
-
-  margin: 0;
-  padding: 0;
 
   font-family: Arial, sans-serif;
 
@@ -275,9 +589,6 @@
   top: 45px;
   left: 25px;
 
-  margin: 0;
-  padding: 0;
-
   font-size: 10px;
 
   line-height: 1;
@@ -297,9 +608,6 @@
 
   left: 20px;
   top: 60px;
-
-  margin: 0;
-  padding: 0;
 
   font-family: var(--font-space), sans-serif;
 
@@ -334,11 +642,9 @@
   height: 73px;
 
   display: flex;
+
   align-items: center;
   justify-content: center;
-
-  margin: 0;
-  padding: 0;
 
   border: 1px solid rgba(6, 59, 38, 0.5);
 
@@ -388,20 +694,20 @@
 
 
 /* =========================================================
-   #FRAMEINGOA WATERMARK
+   FRAME IN GOA
 ========================================================= */
 
 .footer-watermark {
   position: absolute;
 
   left: 50%;
-  bottom: 42px;
+  bottom: 8px;
 
   transform: translateX(-50%);
 
   font-family: var(--font-bebas), sans-serif;
 
-  font-size: 25px;
+  font-size: 16px;
   font-weight: 400;
 
   line-height: 1;
@@ -410,190 +716,13 @@
 
   color: var(--forest);
 
-  opacity: 0.11;
+  opacity: 0.38;
 
   white-space: nowrap;
 
   pointer-events: none;
 
-  z-index: 2;
-}
-
-/* =========================================================
-   EVENT INFO
-========================================================= */
-
-.footer-event-info {
-  position: absolute;
-
-  left: 50%;
-  bottom: 34px;
-
-  transform: translateX(-50%);
-
-  font-family: var(--font-space), sans-serif;
-
-  font-size: 7px;
-  font-weight: 700;
-
-  line-height: 1;
-
-  letter-spacing: 0.14em;
-
-  color: var(--forest);
-
-  opacity: 0.58;
-
-  white-space: nowrap;
-
-  z-index: 4;
-}
-
-
-/* =========================================================
-   INFORMATION STRIP
-========================================================= */
-
-.footer-info-strip {
-  position: absolute;
-
-  left: 205px;
-  right: 168px;
-
-  bottom: 24px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
   z-index: 7;
-}
-
-
-.footer-info-line {
-  flex: 1;
-
-  height: 1px;
-
-  border-top: 1px dashed rgba(6, 59, 38, 0.35);
-}
-
-
-.footer-info-text {
-  display: flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  font-family: var(--font-space), sans-serif;
-
-  font-size: 8px;
-  font-weight: 700;
-
-  line-height: 1;
-
-  letter-spacing: 0.13em;
-
-  color: var(--forest);
-
-  white-space: nowrap;
-
-  opacity: 0.7;
-}
-
-
-.footer-info-text b {
-  font-size: 9px;
-
-  color: var(--pink);
-
-  font-weight: 700;
-}
-
-
-/* =========================================================
-   AUTHENTICITY MARK
-========================================================= */
-
-.footer-auth-mark {
-  position: absolute;
-
-  right: 185px;
-  bottom: 9px;
-
-  width: 38px;
-  height: 38px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  border: 1px solid rgba(6, 59, 38, 0.35);
-
-  border-radius: 50%;
-
-  transform: rotate(-7deg);
-
-  color: var(--forest);
-
-  opacity: 0.48;
-
-  z-index: 7;
-}
-
-
-.footer-auth-mark::before {
-  content: "";
-
-  position: absolute;
-
-  inset: 3px;
-
-  border: 1px dashed rgba(6, 59, 38, 0.35);
-
-  border-radius: 50%;
-}
-
-
-.auth-top,
-.auth-main,
-.auth-bottom {
-  position: relative;
-
-  z-index: 2;
-
-  font-family: var(--font-space), sans-serif;
-
-  line-height: 1;
-}
-
-
-.auth-top {
-  font-size: 4px;
-
-  letter-spacing: 0.12em;
-}
-
-
-.auth-main {
-  margin: 2px 0;
-
-  font-family: var(--font-bebas), sans-serif;
-
-  font-size: 11px;
-
-  letter-spacing: 0.08em;
-}
-
-
-.auth-bottom {
-  font-size: 4px;
-
-  letter-spacing: 0.12em;
 }
 
 
@@ -605,4 +734,21 @@
 .builder-footer *::before,
 .builder-footer *::after {
   box-sizing: border-box;
+}
+
+/* =========================================================
+   QR IMAGE
+========================================================= */
+
+.footer-qr-image {
+  position: relative;
+
+  width: 62px;
+  height: 62px;
+
+  display: block;
+
+  object-fit: contain;
+
+  z-index: 2;
 }

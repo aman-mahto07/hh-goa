@@ -13,27 +13,33 @@ const space = Space_Grotesk({
   variable: "--font-space",
 });
 
+export interface ProofPin {
+  id: string;
+  label: string;
+  icon: string;
+}
+
 interface BuilderFooterProps {
   builderId: string;
+  selectedPins?: ProofPin[];
 }
 
 export default function BuilderFooter({
   builderId,
+  selectedPins = [],
 }: BuilderFooterProps) {
   return (
     <footer
       className={`builder-footer ${bebas.variable} ${space.variable}`}
     >
-      {/* =================================================
-          BACKGROUND
-      ================================================= */}
+      {/* BACKGROUND */}
 
       <div className="builder-footer-bg" />
 
       <div className="builder-footer-content">
 
         {/* =================================================
-            BUILDER ID PLATE
+            BUILDER ID
         ================================================= */}
 
         <div className="footer-id">
@@ -75,6 +81,44 @@ export default function BuilderFooter({
 
 
         {/* =================================================
+            PROOF OF WORK
+        ================================================= */}
+
+        {selectedPins.length > 0 && (
+          <div
+            className={`footer-proof footer-proof-${selectedPins.length}`}
+          >
+
+            <div className="proof-title">
+              <span>✦</span>
+              BUILDER TRAITS
+              <span>✦</span>
+            </div>
+
+            <div className="proof-grid">
+
+              {selectedPins.map((pin) => (
+                <div
+                  className="proof-pin"
+                  key={pin.id}
+                >
+                  <span className="proof-pin-icon">
+                    {pin.icon}
+                  </span>
+
+                  <span className="proof-pin-label">
+                    {pin.label}
+                  </span>
+                </div>
+              ))}
+
+            </div>
+
+          </div>
+        )}
+
+
+        {/* =================================================
             QR SECTION
         ================================================= */}
 
@@ -101,60 +145,22 @@ export default function BuilderFooter({
           </div>
 
           <div className="qr-box">
-            <span>QR</span>
-          </div>
+  <img
+    src="/images/qr.png"
+    alt="Hacker House Goa QR Code"
+    className="footer-qr-image"
+  />
+</div>
 
         </div>
 
 
         {/* =================================================
-            FRAME IN GOA WATERMARK
+            FRAME IN GOA
         ================================================= */}
 
         <div className="footer-watermark">
-          #FRAMEINGOA 
-        </div>
-
-
-        {/* =================================================
-            INFORMATION STRIP
-        ================================================= */}
-
-        <div className="footer-info-strip">
-
-          <span className="footer-info-line" />
-
-          <span className="footer-info-text">
-            BUILDER
-            <b>•</b>
-            VERIFIED
-            <b>•</b>
-            GOA '26
-          </span>
-
-          <span className="footer-info-line" />
-
-        </div>
-
-
-        {/* =================================================
-            AUTHENTICITY MARK
-        ================================================= */}
-
-        <div className="footer-auth-mark">
-
-          <span className="auth-top">
-            HH
-          </span>
-
-          <span className="auth-main">
-            GOA
-          </span>
-
-          <span className="auth-bottom">
-            2026
-          </span>
-
+          #FRAMEINGOA
         </div>
 
       </div>

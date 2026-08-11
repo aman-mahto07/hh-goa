@@ -1189,3 +1189,116 @@
 .builder-mode-option.selected .mode-option-symbol {
   color: #063b26;
 }
+
+/* =========================================================
+   PROOF-OF-WORK FORM
+========================================================= */
+
+.proof-form-field {
+  margin-top: 8px;
+}
+
+.proof-form-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+}
+
+.proof-form-heading label {
+  margin: 0;
+}
+
+.proof-form-heading span {
+  font-family: var(--font-space), sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #d93461;
+}
+
+.proof-form-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 6px;
+}
+
+.proof-form-option {
+  position: relative;
+
+  min-height: 38px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 6px 9px;
+
+  border: 1px solid rgba(6, 59, 38, 0.3);
+
+  background: rgba(241, 228, 194, 0.4);
+
+  color: #063b26;
+
+  font-family: inherit;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.proof-form-option:hover {
+  border-color: #d93461;
+  transform: translateY(-1px);
+}
+
+.proof-form-option.is-selected {
+  background: #063b26;
+  border-color: #d93461;
+  color: #f1e4c2;
+}
+
+.proof-form-icon {
+  width: 23px;
+  height: 23px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #d93461;
+
+  font-size: 11px;
+}
+
+.proof-form-label {
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.05em;
+}
+
+.proof-form-check {
+  margin-left: auto;
+
+  color: #e5b900;
+
+  font-size: 11px;
+  font-weight: 700;
+}

@@ -313,3 +313,154 @@
 
   z-index: 6;
 }
+
+/* =========================================================
+   PROOF-OF-WORK SELECTION
+========================================================= */
+
+.proof-selection {
+  position: relative;
+
+  width: 100%;
+
+  margin-top: 18px;
+
+  z-index: 10;
+}
+
+
+/* Header */
+
+.proof-selection-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 8px;
+
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: 0.12em;
+
+  color: #063b26;
+}
+
+
+/* Selection count */
+
+.proof-selection-header span:last-child {
+  color: #d93461;
+}
+
+
+/* Grid */
+
+.proof-selection-grid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 6px;
+}
+
+
+/* Option */
+
+.proof-option {
+  position: relative;
+
+  min-height: 34px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 5px 8px;
+
+  border: 1px solid rgba(6, 59, 38, 0.35);
+
+  background: rgba(241, 228, 194, 0.35);
+
+  color: #063b26;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  text-align: left;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+.proof-option:hover {
+  border-color: #d93461;
+
+  transform: translateY(-1px);
+}
+
+
+/* Selected */
+
+.proof-option-selected {
+  background: #063b26;
+
+  border-color: #d93461;
+
+  color: #f1e4c2;
+}
+
+
+/* Icon */
+
+.proof-option-icon {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #d93461;
+
+  font-size: 11px;
+}
+
+
+/* Label */
+
+.proof-option-label {
+  font-family: var(--font-space), sans-serif;
+
+  font-size: 6.5px;
+  font-weight: 700;
+
+  line-height: 1.1;
+
+  letter-spacing: 0.06em;
+}
+
+
+/* Check */
+
+.proof-option-check {
+  margin-left: auto;
+
+  font-size: 10px;
+
+  color: #e5b900;
+}

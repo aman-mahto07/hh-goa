@@ -19,7 +19,9 @@ export default function BuilderBody({
   return (
     <section className="builder-body">
 
-      {/* PHOTO */}
+      {/* =================================================
+          PHOTO
+      ================================================= */}
 
       <div className="builder-photo">
 
@@ -33,22 +35,10 @@ export default function BuilderBody({
 
       </div>
 
-      <div className="builder-photo">
-  {photo && (
-    <img
-      src={photo}
-      alt="Builder"
-      className="builder-photo-image"
-    />
-  )}
-</div>
 
-<div className="photo-hashtag">
-  #FRAMEINGOA
-</div>
-
-
-      {/* APPROVED STAMP */}
+      {/* =================================================
+          APPROVED STAMP
+      ================================================= */}
 
       <img
         src="/images/approved-stamp.png"
@@ -57,7 +47,9 @@ export default function BuilderBody({
       />
 
 
-      {/* IDENTITY */}
+      {/* =================================================
+          IDENTITY
+      ================================================= */}
 
       <div className="builder-identity">
 
@@ -112,6 +104,15 @@ export default function BuilderBody({
 
         </div>
 
+      </div>
+
+
+      {/* =================================================
+          PHOTO HASHTAG
+      ================================================= */}
+
+      <div className="photo-hashtag">
+        #FRAMEINGOA
       </div>
 
     </section>

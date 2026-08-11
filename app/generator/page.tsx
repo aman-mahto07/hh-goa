@@ -1,17 +1,108 @@
 "use client";
 
 import { useState } from "react";
+
 import BuilderCard from "@/components/card/BuilderCard";
+import type { ProofPin } from "@/components/card/footer/BuilderFooter";
+
 import "./generator.css";
 
+
+/* =========================================================
+   PROOF-OF-WORK PINS
+========================================================= */
+
+const PROOF_PINS: ProofPin[] = [
+  {
+    id: "hackathon-vet",
+    label: "HACKATHON VET",
+    icon: "⚡",
+  },
+  {
+    id: "community-builder",
+    label: "COMMUNITY BUILDER",
+    icon: "✦",
+  },
+  {
+    id: "open-source",
+    label: "OPEN SOURCE",
+    icon: "⌘",
+  },
+  {
+    id: "technical-storyteller",
+    label: "TECHNICAL STORYTELLER",
+    icon: "◈",
+  },
+];
+
+
+/* =========================================================
+   NAME → BUILDER ID
+========================================================= */
+
+function generateBuilderId(name: string): string {
+  const normalizedName = name
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+
+  if (!normalizedName) {
+    return "HH-GOA-26-0000";
+  }
+
+  let hash = 0;
+
+  for (let i = 0; i < normalizedName.length; i++) {
+    hash =
+      (hash << 5) -
+      hash +
+      normalizedName.charCodeAt(i);
+
+    hash |= 0;
+  }
+
+  const positiveHash = Math.abs(hash);
+
+  const suffix = positiveHash
+    .toString(36)
+    .toUpperCase()
+    .padStart(4, "0")
+    .slice(-4);
+
+  return `HH-GOA-26-${suffix}`;
+}
+
+
 export default function GeneratorPage() {
+
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+
   const [mode, setMode] = useState("NIGHT OWL");
   const [modeOpen, setModeOpen] = useState(false);
 
-  const [builderId] = useState("HH-GOA-26-0000");
-  const [photo, setPhoto] = useState<string | undefined>();
+  const [photo, setPhoto] =
+    useState<string | undefined>();
+
+
+  /* =================================================
+     BUILDER ID
+  ================================================= */
+
+  const builderId = generateBuilderId(name);
+
+
+  /* =================================================
+     PROOF-OF-WORK PINS
+  ================================================= */
+
+  const [selectedPins, setSelectedPins] =
+    useState<ProofPin[]>([]);
+
+
+  /* =================================================
+     BUILDER MODES
+  ================================================= */
 
   const builderModes = [
     "NIGHT OWL",
@@ -22,17 +113,70 @@ export default function GeneratorPage() {
     "BREAK → FIX → SHIP",
   ];
 
+
+  /* =================================================
+     PHOTO UPLOAD
+  ================================================= */
+
   const handlePhotoUpload = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const file = event.target.files?.[0];
+
+    const file =
+      event.target.files?.[0];
 
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
+    const imageUrl =
+      URL.createObjectURL(file);
 
     setPhoto(imageUrl);
   };
+
+
+  /* =================================================
+     PIN TOGGLE
+  ================================================= */
+
+  const toggleProofPin = (pin: ProofPin) => {
+
+    const alreadySelected =
+      selectedPins.some(
+        (selectedPin) =>
+          selectedPin.id === pin.id
+      );
+
+
+    /* REMOVE */
+
+    if (alreadySelected) {
+
+      setSelectedPins(
+        selectedPins.filter(
+          (selectedPin) =>
+            selectedPin.id !== pin.id
+        )
+      );
+
+      return;
+    }
+
+
+    /* MAX 4 */
+
+    if (selectedPins.length >= 4) {
+      return;
+    }
+
+
+    /* ADD */
+
+    setSelectedPins([
+      ...selectedPins,
+      pin,
+    ]);
+  };
+
 
   return (
     <main>
@@ -202,7 +346,9 @@ export default function GeneratorPage() {
                       modeOpen ? "is-open" : ""
                     }`}
                     onClick={() =>
-                      setModeOpen((open) => !open)
+                      setModeOpen(
+                        (open) => !open
+                      )
                     }
                   >
 
@@ -215,44 +361,57 @@ export default function GeneratorPage() {
                     </span>
 
                     <span className="mode-arrow">
-                      {modeOpen ? "▴" : "▾"}
+                      {modeOpen
+                        ? "▴"
+                        : "▾"}
                     </span>
 
                   </button>
 
 
                   {modeOpen && (
+
                     <div className="builder-mode-options">
 
-                      {builderModes.map((builderMode) => (
+                      {builderModes.map(
+                        (builderMode) => (
 
-                        <button
-                          key={builderMode}
-                          type="button"
-                          className={`builder-mode-option ${
-                            mode === builderMode
-                              ? "selected"
-                              : ""
-                          }`}
-                          onClick={() => {
-                            setMode(builderMode);
-                            setModeOpen(false);
-                          }}
-                        >
+                          <button
+                            key={builderMode}
+                            type="button"
+                            className={`builder-mode-option ${
+                              mode === builderMode
+                                ? "selected"
+                                : ""
+                            }`}
+                            onClick={() => {
 
-                          <span className="mode-option-symbol">
-                            ◈
-                          </span>
+                              setMode(
+                                builderMode
+                              );
 
-                          <span>
-                            {builderMode}
-                          </span>
+                              setModeOpen(
+                                false
+                              );
 
-                        </button>
+                            }}
+                          >
 
-                      ))}
+                            <span className="mode-option-symbol">
+                              ◈
+                            </span>
+
+                            <span>
+                              {builderMode}
+                            </span>
+
+                          </button>
+
+                        )
+                      )}
 
                     </div>
+
                   )}
 
                 </div>
@@ -297,9 +456,83 @@ export default function GeneratorPage() {
                   id="builder-photo"
                   type="file"
                   accept="image/png,image/jpeg,image/webp"
-                  onChange={handlePhotoUpload}
+                  onChange={
+                    handlePhotoUpload
+                  }
                   hidden
                 />
+
+              </div>
+
+
+              {/* =================================================
+                  PROOF-OF-WORK
+              ================================================= */}
+
+              <div className="form-field">
+
+                <div className="proof-selection-header">
+
+                  <span>
+                    PROOF OF WORK
+                  </span>
+
+                  <span>
+                    {selectedPins.length}/4
+                  </span>
+
+                </div>
+
+
+                <div className="proof-selection-grid">
+
+                  {PROOF_PINS.map((pin) => {
+
+                    const isSelected =
+                      selectedPins.some(
+                        (selectedPin) =>
+                          selectedPin.id ===
+                          pin.id
+                      );
+
+                    return (
+
+                      <button
+                        key={pin.id}
+                        type="button"
+                        className={`proof-option ${
+                          isSelected
+                            ? "proof-option-selected"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          toggleProofPin(pin)
+                        }
+                      >
+
+                        <span className="proof-option-icon">
+                          {pin.icon}
+                        </span>
+
+                        <span className="proof-option-label">
+                          {pin.label}
+                        </span>
+
+                        {isSelected && (
+
+                          <span className="proof-option-check">
+                            ✓
+                          </span>
+
+                        )}
+
+                      </button>
+
+                    );
+
+                  })}
+
+                </div>
 
               </div>
 
@@ -346,11 +579,13 @@ export default function GeneratorPage() {
                 mode={mode}
                 builderId={builderId}
                 photo={photo}
+                selectedPins={selectedPins}
               />
 
 
               <p className="preview-note">
-                Your identity card updates live as you build.
+                Your identity card updates live
+                as you build.
               </p>
 
             </section>

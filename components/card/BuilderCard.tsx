@@ -1,50 +1,32 @@
 "use client";
 
 import "./BuilderCard.css";
+
 import BuilderBody from "./body/BuilderBody";
-import BuilderFooter from "./footer/BuilderFooter";
+
+import BuilderFooter, {
+  ProofPin,
+} from "./footer/BuilderFooter";
 
 interface BuilderCardProps {
   name: string;
   role: string;
   mode: string;
+  builderId: string;
   photo?: string;
+
+  // NEW
+  selectedPins?: ProofPin[];
 }
 
-function generateBuilderId(name: string): string {
-  const normalizedName = name
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, " ");
-
-  let hash = 2166136261;
-
-  for (let i = 0; i < normalizedName.length; i++) {
-    hash ^= normalizedName.charCodeAt(i);
-    hash = Math.imul(hash, 16777619);
-  }
-
-  hash >>>= 0;
-
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let id = "";
-
-  for (let i = 0; i < 4; i++) {
-    id += chars[hash % chars.length];
-    hash = Math.floor(hash / chars.length);
-  }
-
-  return `HH-GOA-26-${id}`;
-}
 export default function BuilderCard({
   name,
   role,
   mode,
+  builderId,
   photo,
+  selectedPins = [],
 }: BuilderCardProps) {
-
-  const builderId = generateBuilderId(name);
-
   return (
     <div className="builder-card">
 
@@ -122,6 +104,7 @@ export default function BuilderCard({
 
       <BuilderFooter
         builderId={builderId}
+        selectedPins={selectedPins}
       />
 
     </div>
