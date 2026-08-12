@@ -910,15 +910,49 @@
 }
 
 
-/*
-   The new BuilderCard controls its own size.
-   Don't force width/height from the generator.
-*/
+/* =========================================================
+   RESPONSIVE PREVIEW STAGE
+   =========================================================
+   Reserves exactly enough space (520 x 650, scaled) for the
+   Builder Card so nothing overlaps or overflows regardless
+   of screen width. The scale itself is computed live in
+   page.tsx via ResizeObserver and applied as an inline
+   style — this avoids relying on CSS calc() to turn a
+   viewport-width length into the unitless number that
+   transform: scale() requires, which browsers will
+   otherwise silently reject.
+========================================================= */
 
-.preview-panel > .builder-card {
-  flex-shrink: 0;
+.preview-stage {
+  position: relative;
+
+  width: 100%;
+  max-width: 520px;
 
   margin: 0 auto;
+
+  overflow: visible;
+}
+
+
+/* =========================================================
+   CARD EXPORT WRAPPER
+========================================================= */
+
+.builder-card-export {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 520px;
+
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+
+  transform-origin: top left;
 }
 
 
@@ -1840,23 +1874,6 @@
 
 
 /* =========================================================
-   CARD EXPORT WRAPPER
-========================================================= */
-
-.builder-card-export {
-  display: inline-block;
-
-  width: 520px;
-
-  margin: 0 auto;
-
-  padding: 0;
-
-  background: transparent;
-}
-
-
-/* =========================================================
    BUILDER TRAITS — SELECTED STATE
 ========================================================= */
 
@@ -2466,129 +2483,6 @@ span:last-child:has(+ *) {
     width: 100%;
 
     overflow: visible;
-  }
-
-
-  .builder-card-export {
-    position: relative;
-
-    width: 520px;
-    height: 650px;
-
-    margin: 0 auto;
-    padding: 0;
-
-    display: flex;
-
-    align-items: flex-start;
-    justify-content: center;
-
-    overflow: visible;
-
-    box-sizing: border-box;
-  }
-
-
-  .builder-card-export > .builder-card {
-    position: relative;
-
-    width: 520px;
-    height: 650px;
-
-    flex: 0 0 520px;
-
-    margin: 0;
-
-    zoom: 1;
-
-    transform: none;
-
-    box-sizing: border-box;
-  }
-
-}
-
-/* =========================================================
-   BUILDER CARD — MOBILE SCALING (single source of truth)
-   =========================================================
-   The card keeps its native 520 × 650 size internally and is
-   visually scaled with transform: scale() to fit the phone
-   viewport. transform:scale() (unlike `zoom`) is supported
-   consistently across every mobile browser, and we reserve
-   the scaled height on the wrapper manually since transform
-   doesn't affect layout flow the way `zoom` does.
-
-   NOTE: this block intentionally comes AFTER the tablet
-   block above so it correctly overrides it at narrower
-   widths, and there is only ONE block per breakpoint now —
-   previously this was duplicated 4x with conflicting
-   `zoom` / `transform` rules fighting each other, which is
-   why mobile rendering was unreliable.
-========================================================= */
-
-@media (max-width: 800px) {
-
-  .preview-panel {
-    width: 100%;
-    overflow: visible;
-  }
-
-  .builder-card-export {
-    position: relative;
-
-    width: 100%;
-    max-width: 520px;
-
-    /* reserve height = scaled width * (650 / 520) */
-    height: calc(min(100vw - 32px, 520px) * 650 / 520);
-
-    margin: 0 auto;
-    padding: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    overflow: visible;
-    box-sizing: border-box;
-  }
-
-  .builder-card-export > .builder-card {
-    position: absolute;
-
-    top: 0;
-    left: 50%;
-
-    width: 520px;
-    height: 650px;
-
-    margin: 0;
-    flex: none;
-
-    transform-origin: top center;
-    transform:
-      translateX(-50%)
-      scale(calc(min(100vw - 32px, 520px) / 520));
-
-    box-sizing: border-box;
-  }
-
-}
-
-/* =========================================================
-   EXTRA SMALL PHONES — builder card
-========================================================= */
-
-@media (max-width: 380px) {
-
-  .builder-card-export {
-    height: calc((100vw - 24px) * 650 / 520);
-  }
-
-  .builder-card-export > .builder-card {
-    transform:
-      translateX(-50%)
-      scale(calc((100vw - 24px) / 520));
   }
 
 }

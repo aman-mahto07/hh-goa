@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 
 import BuilderCard from "@/components/card/BuilderCard";
@@ -74,6 +74,14 @@ function generateBuilderId(name: string): string {
 }
 
 
+/* =========================================================
+   BUILDER CARD NATIVE DIMENSIONS
+========================================================= */
+
+const CARD_NATIVE_WIDTH = 520;
+const CARD_NATIVE_HEIGHT = 650;
+
+
 export default function GeneratorPage() {
 
   /* =================================================
@@ -115,6 +123,66 @@ export default function GeneratorPage() {
 
   const cardExportRef =
     useRef<HTMLDivElement>(null);
+
+
+  /* =================================================
+     RESPONSIVE CARD SCALING
+     =================================================
+     The Builder Card keeps its native 520x650 size
+     internally (so nothing inside it has to know
+     about responsiveness), and we visually scale the
+     whole thing down to fit the available width using
+     a live-measured ResizeObserver instead of a CSS
+     calc() trick — calc() can't produce the unitless
+     number that transform: scale() requires from a
+     viewport-width length, so a pure-CSS version of
+     this silently fails on some screens.
+  ================================================= */
+
+  const previewStageRef =
+    useRef<HTMLDivElement>(null);
+
+  const [cardScale, setCardScale] =
+    useState(1);
+
+  useEffect(() => {
+
+    const stageNode =
+      previewStageRef.current;
+
+    if (!stageNode) return;
+
+
+    const updateScale = () => {
+
+      const availableWidth =
+        stageNode.clientWidth;
+
+      if (!availableWidth) return;
+
+      const nextScale = Math.min(
+        1,
+        availableWidth / CARD_NATIVE_WIDTH
+      );
+
+      setCardScale(nextScale);
+    };
+
+
+    updateScale();
+
+
+    const resizeObserver =
+      new ResizeObserver(updateScale);
+
+    resizeObserver.observe(stageNode);
+
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+
+  }, []);
 
 
   /* =================================================
@@ -518,31 +586,23 @@ export default function GeneratorPage() {
       }
 
 
-      /* GET EXACT CARD DIMENSIONS */
+      /*
+        DOWNLOAD AT FULL NATIVE RESOLUTION
 
-      const rect =
-        cardElement.getBoundingClientRect();
+        On small screens the card is visually scaled down
+        via CSS transform so it fits the viewport. We don't
+        want the downloaded PNG to inherit that shrink, so
+        we temporarily neutralize the scale, capture at the
+        card's native 520x650 size, then restore it.
+      */
 
+      const exportWrapper =
+        cardExportRef.current;
 
-      const width =
-        Math.round(rect.width);
+      const previousTransform =
+        exportWrapper.style.transform;
 
-      const height =
-        Math.round(rect.height);
-
-
-      if (!width || !height) {
-
-        console.error(
-          "Invalid Builder Card dimensions:",
-          {
-            width,
-            height,
-          }
-        );
-
-        return;
-      }
+      exportWrapper.style.transform = "scale(1)";
 
 
       /* GENERATE PNG */
@@ -557,8 +617,8 @@ export default function GeneratorPage() {
 
             skipFonts: false,
 
-            width,
-            height,
+            width: CARD_NATIVE_WIDTH,
+            height: CARD_NATIVE_HEIGHT,
 
             backgroundColor:
               "#f3e6c4",
@@ -568,6 +628,12 @@ export default function GeneratorPage() {
             },
           }
         );
+
+
+      /* RESTORE VISUAL SCALE */
+
+      exportWrapper.style.transform =
+        previousTransform;
 
 
       /* DOWNLOAD */
@@ -1212,22 +1278,43 @@ https://hhgoa-own-id-card.vercel.app
 
 
               {/* =================================================
-                  CARD EXPORT TARGET
+                  RESPONSIVE STAGE
+                  Reserves the correctly scaled amount of
+                  space so nothing below it (the preview
+                  note) overlaps or gets clipped.
               ================================================= */}
 
               <div
-                ref={cardExportRef}
-                className="builder-card-export"
+                ref={previewStageRef}
+                className="preview-stage"
+                style={{
+                  height:
+                    CARD_NATIVE_HEIGHT * cardScale,
+                }}
               >
 
-                <BuilderCard
-                  name={name}
-                  role={role}
-                  mode={mode}
-                  builderId={builderId}
-                  photo={photo}
-                  selectedPins={selectedPins}
-                />
+                {/* =================================================
+                    CARD EXPORT TARGET
+                ================================================= */}
+
+                <div
+                  ref={cardExportRef}
+                  className="builder-card-export"
+                  style={{
+                    transform: `scale(${cardScale})`,
+                  }}
+                >
+
+                  <BuilderCard
+                    name={name}
+                    role={role}
+                    mode={mode}
+                    builderId={builderId}
+                    photo={photo}
+                    selectedPins={selectedPins}
+                  />
+
+                </div>
 
               </div>
 
