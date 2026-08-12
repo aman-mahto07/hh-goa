@@ -692,7 +692,7 @@ export default function GeneratorPage() {
 Ready to build, ship, break things and meet some incredible builders in Goa. 🚀
 
 Create your own Builder Card:
-https://hhgoa-own-id-card.vercel.app
+https://hh-goa-builderid.vercel.app/
 
 #FrameInGoa #HackerHouseGoa`;
 
