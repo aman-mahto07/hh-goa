@@ -2318,74 +2318,6 @@ span:last-child:has(+ *) {
     line-height: 1.5;
   }
 
-
-    /* =========================================================
-     BUILDER CARD — MOBILE PREVIEW
-
-     The Builder Card itself stays at its native 520 × 650
-     dimensions. On smaller screens, the complete card is
-     scaled down uniformly so the entire card remains visible.
-     It is never scaled UP above its native size.
-  ========================================================= */
-
-  .builder-card-export {
-    position: relative;
-
-    width: 100%;
-
-    /*
-      Reserve the scaled height of the card on narrow screens.
-      On wider mobile screens, the card stays at its native size.
-    */
-    height: calc((100vw - 32px) * 1.25);
-
-    margin: 0 auto;
-    padding: 0;
-
-    display: flex;
-
-    align-items: flex-start;
-    justify-content: center;
-
-    overflow: visible;
-
-    box-sizing: border-box;
-  }
-
-
-  .builder-card-export > .builder-card {
-    position: relative;
-
-    width: 520px;
-    height: 650px;
-
-    flex: 0 0 520px;
-
-    margin: 0;
-
-    /*
-      IMPORTANT:
-      Never allow the card to become larger than
-      its original 520 × 650 size.
-
-      390px phone → card scales down
-      430px phone → card scales down
-      520px phone → card scales down
-      600px phone → card stays at 520px
-    */
-    zoom: min(
-      1,
-      calc((100vw - 32px) / 520)
-    );
-
-    transform: none;
-
-    box-sizing: border-box;
-  }
-  
-
- 
-
 }
 
 
@@ -2572,6 +2504,91 @@ span:last-child:has(+ *) {
     transform: none;
 
     box-sizing: border-box;
+  }
+
+}
+
+/* =========================================================
+   BUILDER CARD — MOBILE SCALING (single source of truth)
+   =========================================================
+   The card keeps its native 520 × 650 size internally and is
+   visually scaled with transform: scale() to fit the phone
+   viewport. transform:scale() (unlike `zoom`) is supported
+   consistently across every mobile browser, and we reserve
+   the scaled height on the wrapper manually since transform
+   doesn't affect layout flow the way `zoom` does.
+
+   NOTE: this block intentionally comes AFTER the tablet
+   block above so it correctly overrides it at narrower
+   widths, and there is only ONE block per breakpoint now —
+   previously this was duplicated 4x with conflicting
+   `zoom` / `transform` rules fighting each other, which is
+   why mobile rendering was unreliable.
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .preview-panel {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .builder-card-export {
+    position: relative;
+
+    width: 100%;
+    max-width: 520px;
+
+    /* reserve height = scaled width * (650 / 520) */
+    height: calc(min(100vw - 32px, 520px) * 650 / 520);
+
+    margin: 0 auto;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .builder-card-export > .builder-card {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    width: 520px;
+    height: 650px;
+
+    margin: 0;
+    flex: none;
+
+    transform-origin: top center;
+    transform:
+      translateX(-50%)
+      scale(calc(min(100vw - 32px, 520px) / 520));
+
+    box-sizing: border-box;
+  }
+
+}
+
+/* =========================================================
+   EXTRA SMALL PHONES — builder card
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .builder-card-export {
+    height: calc((100vw - 24px) * 650 / 520);
+  }
+
+  .builder-card-export > .builder-card {
+    transform:
+      translateX(-50%)
+      scale(calc((100vw - 24px) / 520));
   }
 
 }
