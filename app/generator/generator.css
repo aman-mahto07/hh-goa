@@ -953,6 +953,8 @@
   background: transparent;
 
   transform-origin: top left;
+
+  will-change: transform;
 }
 
 
@@ -1647,6 +1649,8 @@
   text-transform: uppercase;
 
   cursor: pointer;
+
+  -webkit-tap-highlight-color: transparent;
 
   transition:
     transform 0.15s ease,

@@ -589,21 +589,12 @@ export default function GeneratorPage() {
       /*
         DOWNLOAD AT FULL NATIVE RESOLUTION
 
-        On small screens the card is visually scaled down
-        via CSS transform so it fits the viewport. We don't
-        want the downloaded PNG to inherit that shrink, so
-        we temporarily neutralize the scale, capture at the
-        card's native 520x650 size, then restore it.
+        Instead of changing the transform on the live wrapper
+        (which causes visual flicker), we pass transform-origin
+        and scale hints to toPng in the style object. This way,
+        html-to-image handles the scaling internally without
+        touching the DOM.
       */
-
-      const exportWrapper =
-        cardExportRef.current;
-
-      const previousTransform =
-        exportWrapper.style.transform;
-
-      exportWrapper.style.transform = "scale(1)";
-
 
       /* GENERATE PNG */
 
@@ -625,15 +616,11 @@ export default function GeneratorPage() {
 
             style: {
               margin: "0",
+              transform: "scale(1) !important",
+              transformOrigin: "top left !important",
             },
           }
         );
-
-
-      /* RESTORE VISUAL SCALE */
-
-      exportWrapper.style.transform =
-        previousTransform;
 
 
       /* DOWNLOAD */
