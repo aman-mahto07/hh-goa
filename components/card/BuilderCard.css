@@ -21,6 +21,8 @@
   border-radius: 26px;
 
   color: #063b26;
+
+  isolation: isolate;
 }
 
 
@@ -72,12 +74,13 @@
 
   box-sizing: border-box;
 
-  z-index: 10;
+  z-index: 20;
 }
 
 
 /* =========================================================
-   TOP LEFT — HH / GOA / '26
+   TOP LEFT
+   HH / GOA / '26
 ========================================================= */
 
 .header-brand {
@@ -103,7 +106,7 @@
 
   color: #ffd21c;
 
-  z-index: 10;
+  z-index: 20;
 }
 
 .header-brand > span:first-child {
@@ -130,7 +133,8 @@
 
 
 /* =========================================================
-   TOP RIGHT — DATE
+   TOP RIGHT
+   DATE
 ========================================================= */
 
 .header-date {
@@ -160,7 +164,7 @@
 
   color: #ffd21c;
 
-  z-index: 10;
+  z-index: 20;
 }
 
 .header-date span {
@@ -197,7 +201,7 @@
 
   color: #ff176f;
 
-  z-index: 10;
+  z-index: 20;
 }
 
 
@@ -284,13 +288,9 @@
 
 
 /* =========================================================
-   HACKER — ARCH
+   HACKER
+   ARCH
 ========================================================= */
-
-/*
-   Outer letters sit slightly lower.
-   Center letters stay higher.
-*/
 
 .title-hacker span:nth-child(1) {
   transform:
@@ -330,7 +330,8 @@
 
 
 /* =========================================================
-   HOUSE — ARCH
+   HOUSE
+   ARCH
 ========================================================= */
 
 .title-house {
@@ -402,7 +403,9 @@
 
   transform: rotate(-6deg);
 
-  z-index: 15;
+  transform-origin: center;
+
+  z-index: 25;
 }
 
 
@@ -511,4 +514,120 @@
 .builder-card *::before,
 .builder-card *::after {
   box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MOBILE SAFETY
+========================================================= */
+
+@media (max-width: 800px) {
+
+  /*
+    Keep the card internally fixed at 520 × 650.
+
+    The generator wrapper is responsible for scaling
+    the complete card on mobile.
+  */
+
+  .builder-card {
+    width: 520px;
+    height: 650px;
+
+    max-width: none;
+    min-width: 520px;
+
+    overflow: hidden;
+  }
+
+
+  /*
+    Keep all header artwork inside the card.
+    This prevents the sticker/text from creating
+    visual overflow when the entire card is scaled.
+  */
+
+  .builder-card-header {
+    width: 520px;
+    height: 230px;
+
+    overflow: hidden;
+  }
+
+
+  /*
+    Prevent the Goa sticker from behaving strangely
+    because of mobile text rendering.
+  */
+
+  .header-goa {
+    right: -7px;
+    bottom: 5px;
+
+    font-size: 13px;
+
+    transform:
+      rotate(-6deg)
+      translateZ(0);
+
+    transform-origin: center;
+  }
+
+
+  /*
+    Keep title positioning identical to desktop.
+  */
+
+  .header-title {
+    width: 390px;
+
+    left: 50%;
+
+    transform:
+      translateX(-50%)
+      translateZ(0);
+  }
+
+
+  /*
+    Keep the pass strip perfectly centered.
+  */
+
+  .builder-pass-strip {
+    left: 50%;
+
+    transform:
+      translateX(-50%)
+      translateZ(0);
+  }
+}
+
+
+/* =========================================================
+   EXTRA SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .builder-card {
+    width: 520px;
+    height: 650px;
+  }
+
+  .header-brand {
+    left: 25px;
+  }
+
+  .header-date {
+    right: 25px;
+  }
+
+  .header-location {
+    right: 25px;
+  }
+
+  .header-goa {
+    right: -7px;
+    bottom: 5px;
+  }
 }

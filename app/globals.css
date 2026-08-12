@@ -550,7 +550,13 @@ body {
   .hero {
     min-height: 100svh;
 
-    background-position: center;
+    /*
+      Keep the complete Goa background visible vertically
+      instead of using cover, which crops the sides on phones.
+    */
+    background-size: auto 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
   }
 
 
@@ -626,6 +632,9 @@ body {
 
   .title-word {
     transform: scaleX(1.05);
+
+    text-shadow:
+    2px 2px 0 rgba(0, 45, 25, 0.9);
   }
 
 
