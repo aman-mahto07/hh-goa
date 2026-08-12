@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { toPng } from "html-to-image";
 
 import BuilderCard from "@/components/card/BuilderCard";
 import type { ProofPin } from "@/components/card/footer/BuilderFooter";
@@ -75,29 +76,53 @@ function generateBuilderId(name: string): string {
 
 export default function GeneratorPage() {
 
+  /* =================================================
+     BASIC FORM STATE
+  ================================================= */
+
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
 
-  const [mode, setMode] = useState("NIGHT OWL");
-  const [modeOpen, setModeOpen] = useState(false);
+  const [mode, setMode] =
+    useState("NIGHT OWL");
+
+  const [modeOpen, setModeOpen] =
+    useState(false);
+
+
+  /* =================================================
+     PHOTO STATE
+  ================================================= */
 
   const [photo, setPhoto] =
     useState<string | undefined>();
+
+  const [isDragging, setIsDragging] =
+    useState(false);
+
+
+  /* =================================================
+     BUILDER TRAITS
+  ================================================= */
+
+  const [selectedPins, setSelectedPins] =
+    useState<ProofPin[]>([]);
+
+
+  /* =================================================
+     CARD EXPORT REF
+  ================================================= */
+
+  const cardExportRef =
+    useRef<HTMLDivElement>(null);
 
 
   /* =================================================
      BUILDER ID
   ================================================= */
 
-  const builderId = generateBuilderId(name);
-
-
-  /* =================================================
-     PROOF-OF-WORK PINS
-  ================================================= */
-
-  const [selectedPins, setSelectedPins] =
-    useState<ProofPin[]>([]);
+  const builderId =
+    generateBuilderId(name);
 
 
   /* =================================================
@@ -115,7 +140,152 @@ export default function GeneratorPage() {
 
 
   /* =================================================
-     PHOTO UPLOAD
+     PHOTO FILE HANDLER
+  ================================================= */
+
+  const handlePhotoFile = async (file?: File) => {
+
+    if (!file) return;
+
+
+    const fileName =
+      file.name.toLowerCase();
+
+
+    const isHEIC =
+      file.type === "image/heic" ||
+      file.type === "image/heif" ||
+      fileName.endsWith(".heic") ||
+      fileName.endsWith(".heif");
+
+
+    try {
+
+      /* =================================================
+         HEIC → JPEG
+      ================================================= */
+
+      if (isHEIC) {
+
+        const heic2any =
+          (await import("heic2any")).default;
+
+
+        const converted =
+          await heic2any({
+            blob: file,
+            toType: "image/jpeg",
+            quality: 0.92,
+          });
+
+
+        /*
+          heic2any can return
+          a Blob or Blob[].
+        */
+
+        const jpegBlob =
+          Array.isArray(converted)
+            ? converted[0]
+            : converted;
+
+
+        const reader =
+          new FileReader();
+
+
+        reader.onload = () => {
+
+          const result =
+            reader.result;
+
+
+          if (typeof result === "string") {
+            setPhoto(result);
+          }
+
+        };
+
+
+        reader.onerror = () => {
+
+          console.error(
+            "Failed to read converted HEIC photo."
+          );
+
+        };
+
+
+        reader.readAsDataURL(jpegBlob);
+
+        return;
+      }
+
+
+      /* =================================================
+         NORMAL IMAGE FORMATS
+      ================================================= */
+
+      const allowedTypes = [
+        "image/png",
+        "image/jpeg",
+        "image/webp",
+      ];
+
+
+      if (!allowedTypes.includes(file.type)) {
+
+        console.warn(
+          "Unsupported image format:",
+          file.type || file.name
+        );
+
+        return;
+      }
+
+
+      const reader =
+        new FileReader();
+
+
+      reader.onload = () => {
+
+        const result =
+          reader.result;
+
+
+        if (typeof result === "string") {
+          setPhoto(result);
+        }
+
+      };
+
+
+      reader.onerror = () => {
+
+        console.error(
+          "Failed to read uploaded photo."
+        );
+
+      };
+
+
+      reader.readAsDataURL(file);
+
+    } catch (error) {
+
+      console.error(
+        "Failed to process uploaded photo:",
+        error
+      );
+
+    }
+
+  };
+
+
+  /* =================================================
+     FILE INPUT UPLOAD
   ================================================= */
 
   const handlePhotoUpload = (
@@ -125,12 +295,88 @@ export default function GeneratorPage() {
     const file =
       event.target.files?.[0];
 
-    if (!file) return;
 
-    const imageUrl =
-      URL.createObjectURL(file);
+    handlePhotoFile(file);
 
-    setPhoto(imageUrl);
+
+    event.target.value = "";
+  };
+
+
+  /* =================================================
+     DRAG ENTER
+  ================================================= */
+
+  const handlePhotoDragEnter = (
+    event: React.DragEvent<HTMLDivElement>
+  ) => {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    setIsDragging(true);
+  };
+
+
+  /* =================================================
+     DRAG OVER
+  ================================================= */
+
+  const handlePhotoDragOver = (
+    event: React.DragEvent<HTMLDivElement>
+  ) => {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    event.dataTransfer.dropEffect =
+      "copy";
+
+    setIsDragging(true);
+  };
+
+
+  /* =================================================
+     DRAG LEAVE
+  ================================================= */
+
+  const handlePhotoDragLeave = (
+    event: React.DragEvent<HTMLDivElement>
+  ) => {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+
+    if (
+      event.currentTarget ===
+      event.target
+    ) {
+      setIsDragging(false);
+    }
+
+  };
+
+
+  /* =================================================
+     DROP
+  ================================================= */
+
+  const handlePhotoDrop = (
+    event: React.DragEvent<HTMLDivElement>
+  ) => {
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    setIsDragging(false);
+
+
+    const file =
+      event.dataTransfer.files?.[0];
+
+
+    handlePhotoFile(file);
   };
 
 
@@ -138,7 +384,9 @@ export default function GeneratorPage() {
      PIN TOGGLE
   ================================================= */
 
-  const toggleProofPin = (pin: ProofPin) => {
+  const toggleProofPin = (
+    pin: ProofPin
+  ) => {
 
     const alreadySelected =
       selectedPins.some(
@@ -178,8 +426,241 @@ export default function GeneratorPage() {
   };
 
 
+  /* =================================================
+     DOWNLOAD BUILDER ID
+  ================================================= */
+
+  const handleDownload = async () => {
+
+    if (!cardExportRef.current) {
+
+      console.error(
+        "Builder Card export container not found."
+      );
+
+      return;
+    }
+
+
+    try {
+
+      /* WAIT FOR FONTS */
+
+      if ("fonts" in document) {
+        await document.fonts.ready;
+      }
+
+
+      /* WAIT FOR ALL IMAGES */
+
+      const images =
+        Array.from(
+          document.images
+        );
+
+
+      await Promise.all(
+        images.map((image) => {
+
+          if (image.complete) {
+            return Promise.resolve();
+          }
+
+
+          return new Promise<void>(
+            (resolve) => {
+
+              image.onload = () =>
+                resolve();
+
+              image.onerror = () =>
+                resolve();
+
+            }
+          );
+
+        })
+      );
+
+
+      /* WAIT FOR FINAL RENDER */
+
+      await new Promise<void>(
+        (resolve) => {
+
+          requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+              resolve();
+            });
+
+          });
+
+        }
+      );
+
+
+      /* FIND ACTUAL BUILDER CARD */
+
+      const cardElement =
+        cardExportRef.current.querySelector(
+          ".builder-card"
+        ) as HTMLElement | null;
+
+
+      if (!cardElement) {
+
+        console.error(
+          "Actual .builder-card element was not found."
+        );
+
+        return;
+      }
+
+
+      /* GET EXACT CARD DIMENSIONS */
+
+      const rect =
+        cardElement.getBoundingClientRect();
+
+
+      const width =
+        Math.round(rect.width);
+
+      const height =
+        Math.round(rect.height);
+
+
+      if (!width || !height) {
+
+        console.error(
+          "Invalid Builder Card dimensions:",
+          {
+            width,
+            height,
+          }
+        );
+
+        return;
+      }
+
+
+      /* GENERATE PNG */
+
+      const dataUrl =
+        await toPng(
+          cardElement,
+          {
+            cacheBust: true,
+
+            pixelRatio: 2,
+
+            skipFonts: false,
+
+            width,
+            height,
+
+            backgroundColor:
+              "#f3e6c4",
+
+            style: {
+              margin: "0",
+            },
+          }
+        );
+
+
+      /* DOWNLOAD */
+
+      const link =
+        document.createElement("a");
+
+
+      link.download =
+        `${builderId}.png`;
+
+
+      link.href =
+        dataUrl;
+
+
+      document.body.appendChild(link);
+
+
+      link.click();
+
+
+      document.body.removeChild(link);
+
+    } catch (error) {
+
+      console.error(
+        "Failed to download Builder ID:",
+        error
+      );
+
+
+      if (error instanceof Error) {
+
+        console.error(
+          "Download error message:",
+          error.message
+        );
+
+
+        console.error(
+          "Download error stack:",
+          error.stack
+        );
+
+      }
+
+    }
+
+  };
+
+
+  /* =================================================
+     SHARE TO X
+  ================================================= */
+
+  const handleShareToX = () => {
+
+    const displayName =
+      name.trim() || "BUILDER";
+
+
+    const shareText =
+      `🌴 Built my Hacker House Goa '26 Builder Card!
+
+👤 ${displayName}
+🪪 Builder ID: ${builderId}
+
+Ready to build, ship, break things and meet some incredible builders in Goa. 🚀
+
+Create your own Builder Card:
+https://hhgoa-own-id-card.vercel.app
+
+#FrameInGoa #HackerHouseGoa`;
+
+
+    const xUrl =
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        shareText
+      )}`;
+
+
+    window.open(
+      xUrl,
+      "_blank"
+    );
+
+  };
+
+
   return (
     <main>
+
 
       {/* =================================================
           FIXED BACKGROUND
@@ -211,6 +692,7 @@ export default function GeneratorPage() {
           <a href="/">
             HOME
           </a>
+
 
           <a
             href="https://hhgoa.com/"
@@ -244,10 +726,17 @@ export default function GeneratorPage() {
               BUILDER REGISTRY · GOA, INDIA · 2026
             </p>
 
+
             <h1 className="generator-title">
+
               CREATE YOUR
-              <span>BUILDER ID</span>
+
+              <span>
+                BUILDER ID
+              </span>
+
             </h1>
+
 
             <p className="generator-description">
               Build your identity. Ship your pass.
@@ -269,11 +758,13 @@ export default function GeneratorPage() {
 
             <section className="builder-panel">
 
+
               <div className="panel-header">
 
                 <span className="panel-number">
                   01
                 </span>
+
 
                 <span className="panel-title">
                   YOUR DETAILS
@@ -292,12 +783,15 @@ export default function GeneratorPage() {
                   BUILDER NAME
                 </label>
 
+
                 <input
                   id="builder-name"
                   type="text"
                   value={name}
                   onChange={(event) =>
-                    setName(event.target.value)
+                    setName(
+                      event.target.value
+                    )
                   }
                   placeholder="ENTER YOUR NAME"
                 />
@@ -315,12 +809,15 @@ export default function GeneratorPage() {
                   STACK / ROLE
                 </label>
 
+
                 <input
                   id="builder-role"
                   type="text"
                   value={role}
                   onChange={(event) =>
-                    setRole(event.target.value)
+                    setRole(
+                      event.target.value
+                    )
                   }
                   placeholder="E.G. BACKEND DEVELOPER"
                 />
@@ -338,12 +835,15 @@ export default function GeneratorPage() {
                   BUILDER MODE
                 </label>
 
+
                 <div className="builder-mode-select">
 
                   <button
                     type="button"
                     className={`builder-mode-trigger ${
-                      modeOpen ? "is-open" : ""
+                      modeOpen
+                        ? "is-open"
+                        : ""
                     }`}
                     onClick={() =>
                       setModeOpen(
@@ -356,9 +856,11 @@ export default function GeneratorPage() {
                       ◈
                     </span>
 
+
                     <span className="mode-selected">
                       {mode}
                     </span>
+
 
                     <span className="mode-arrow">
                       {modeOpen
@@ -390,6 +892,7 @@ export default function GeneratorPage() {
                                 builderMode
                               );
 
+
                               setModeOpen(
                                 false
                               );
@@ -400,6 +903,7 @@ export default function GeneratorPage() {
                             <span className="mode-option-symbol">
                               ◈
                             </span>
+
 
                             <span>
                               {builderMode}
@@ -423,50 +927,136 @@ export default function GeneratorPage() {
                   PHOTO
               ================================================= */}
 
-              <div className="form-field">
+              <div className="form-field photo-field">
 
-                <label htmlFor="builder-photo">
+                <label className="form-field-label">
                   YOUR PHOTO
                 </label>
 
-                <label
-                  htmlFor="builder-photo"
-                  className="photo-dropzone"
+
+                <div
+                  className={`photo-uploader ${
+                    photo
+                      ? "photo-uploader-has-image"
+                      : ""
+                  } ${
+                    isDragging
+                      ? "photo-uploader-dragging"
+                      : ""
+                  }`}
+                  onDragEnter={
+                    handlePhotoDragEnter
+                  }
+                  onDragOver={
+                    handlePhotoDragOver
+                  }
+                  onDragLeave={
+                    handlePhotoDragLeave
+                  }
+                  onDrop={
+                    handlePhotoDrop
+                  }
                 >
 
-                  <div className="upload-icon">
-                    ↑
-                  </div>
 
-                  <span className="upload-title">
-                    DROP YOUR PHOTO HERE
-                  </span>
+                  <input
+                    id="builder-photo"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/heic,image/heif,.heic,.heif"
+                    onChange={
+                      handlePhotoUpload
+                    }
+                    className="photo-input"
+                  />
 
-                  <span className="upload-subtitle">
-                    OR CLICK TO UPLOAD
-                  </span>
 
-                  <span className="upload-formats">
-                    JPG · PNG · WEBP
-                  </span>
+                  <label
+                    htmlFor="builder-photo"
+                    className="photo-uploader-content"
+                  >
 
-                </label>
+                    {photo ? (
 
-                <input
-                  id="builder-photo"
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp"
-                  onChange={
-                    handlePhotoUpload
-                  }
-                  hidden
-                />
+                      <>
+
+                        <img
+                          src={photo}
+                          alt="Builder preview"
+                          className="photo-upload-preview"
+                        />
+
+
+                        <div className="photo-upload-overlay">
+
+                          <span className="photo-upload-status">
+
+                            {isDragging
+                              ? "DROP TO REPLACE PHOTO ↓"
+                              : "PHOTO UPLOADED ✓"}
+
+                          </span>
+
+
+                          <span className="photo-upload-change">
+
+                            {isDragging
+                              ? "RELEASE TO UPDATE"
+                              : "CLICK TO CHANGE · OR DROP A NEW PHOTO"}
+
+                          </span>
+
+                        </div>
+
+                      </>
+
+                    ) : (
+
+                      <>
+
+                        <div className="photo-upload-icon">
+
+                          {isDragging
+                            ? "↓"
+                            : "↑"}
+
+                        </div>
+
+
+                        <span className="photo-upload-title">
+
+                          {isDragging
+                            ? "DROP IT LIKE YOU MEAN IT"
+                            : "DROP YOUR PHOTO HERE"}
+
+                        </span>
+
+
+                        <span className="photo-upload-subtitle">
+
+                          {isDragging
+                            ? "RELEASE TO UPLOAD"
+                            : "OR CLICK TO BROWSE"}
+
+                        </span>
+
+
+                        <span className="photo-upload-formats">
+                          JPG · PNG · WEBP · HEIC
+                        </span>
+
+                      </>
+
+                    )}
+
+                  </label>
+
+                </div>
 
               </div>
 
 
               {/* =================================================
-                  PROOF-OF-WORK
+                  BUILDER TRAITS
               ================================================= */}
 
               <div className="form-field">
@@ -474,11 +1064,14 @@ export default function GeneratorPage() {
                 <div className="proof-selection-header">
 
                   <span>
-                    PROOF OF WORK
+                    BUILDER TRAITS
                   </span>
 
+
                   <span>
-                    {selectedPins.length}/4
+                    {selectedPins.length === 4
+                      ? "4/4 · FULL LOAD"
+                      : `${selectedPins.length}/4`}
                   </span>
 
                 </div>
@@ -494,6 +1087,7 @@ export default function GeneratorPage() {
                           selectedPin.id ===
                           pin.id
                       );
+
 
                     return (
 
@@ -514,9 +1108,11 @@ export default function GeneratorPage() {
                           {pin.icon}
                         </span>
 
+
                         <span className="proof-option-label">
                           {pin.label}
                         </span>
+
 
                         {isSelected && (
 
@@ -538,16 +1134,58 @@ export default function GeneratorPage() {
 
 
               {/* =================================================
-                  GENERATE
+                  EXPORT ACTIONS
               ================================================= */}
 
-              <button
-                type="button"
-                className="generate-id-button"
-              >
-                GENERATE YOUR ID
-                <span>↗</span>
-              </button>
+              <div className="export-actions">
+
+
+                <button
+                  type="button"
+                  className="download-id-button"
+                  onClick={handleDownload}
+                >
+
+                  <span className="export-icon">
+                    ↓
+                  </span>
+
+
+                  <span>
+                    DOWNLOAD BUILDER PASS
+                  </span>
+
+                </button>
+
+
+                <button
+                  type="button"
+                  className="share-x-button"
+                  onClick={handleShareToX}
+                >
+
+                  <span className="export-x-icon">
+
+                    <img
+                      src="/images/X.png"
+                      alt="X"
+                    />
+
+                  </span>
+
+
+                  <span>
+                    SHARE TO X
+                  </span>
+
+
+                  <span className="export-arrow">
+                    ↗
+                  </span>
+
+                </button>
+
+              </div>
 
             </section>
 
@@ -558,11 +1196,13 @@ export default function GeneratorPage() {
 
             <section className="preview-panel">
 
+
               <div className="panel-header">
 
                 <span className="panel-number">
                   02
                 </span>
+
 
                 <span className="panel-title">
                   LIVE PREVIEW
@@ -571,16 +1211,25 @@ export default function GeneratorPage() {
               </div>
 
 
-              {/* BUILDER CARD */}
+              {/* =================================================
+                  CARD EXPORT TARGET
+              ================================================= */}
 
-              <BuilderCard
-                name={name}
-                role={role}
-                mode={mode}
-                builderId={builderId}
-                photo={photo}
-                selectedPins={selectedPins}
-              />
+              <div
+                ref={cardExportRef}
+                className="builder-card-export"
+              >
+
+                <BuilderCard
+                  name={name}
+                  role={role}
+                  mode={mode}
+                  builderId={builderId}
+                  photo={photo}
+                  selectedPins={selectedPins}
+                />
+
+              </div>
 
 
               <p className="preview-note">

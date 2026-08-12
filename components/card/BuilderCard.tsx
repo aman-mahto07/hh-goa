@@ -15,7 +15,6 @@ interface BuilderCardProps {
   builderId: string;
   photo?: string;
 
-  // NEW
   selectedPins?: ProofPin[];
 }
 
@@ -38,11 +37,24 @@ export default function BuilderCard({
 
         <div className="card-hole" />
 
+
+        {/* =================================================
+            TOP LEFT — HH / GOA / '26
+        ================================================= */}
+
         <div className="header-brand">
-          <span>HH</span>
-          <span>GOA</span>
-          <span>'26</span>
-        </div>
+  <span>HH</span>
+
+  <span className="header-goa-year">
+    <span>GOA</span>
+    <span>'26</span>
+  </span>
+</div>
+
+
+        {/* =================================================
+            TOP RIGHT — DATE
+        ================================================= */}
 
         <div className="header-date">
           <span>28 — 31</span>
@@ -50,16 +62,47 @@ export default function BuilderCard({
           <span>2026</span>
         </div>
 
+
+        {/* =================================================
+            LOCATION
+        ================================================= */}
+
         <div className="header-location">
           GOA,
           <br />
           INDIA
         </div>
 
+
+        {/* =================================================
+            MAIN TITLE
+        ================================================= */}
+
         <div className="header-title">
 
-          <div>HACKER</div>
-          <div>HOUSE</div>
+          {/* HACKER */}
+
+          <div className="title-line title-hacker">
+            {"HACKER".split("").map((letter, index) => (
+              <span key={index}>
+                {letter}
+              </span>
+            ))}
+          </div>
+
+
+          {/* HOUSE */}
+
+          <div className="title-line title-house">
+            {"HOUSE".split("").map((letter, index) => (
+              <span key={index}>
+                {letter}
+              </span>
+            ))}
+          </div>
+
+
+          {/* GOA 2026 STICKER */}
 
           <span className="header-goa">
             गोवा 2026

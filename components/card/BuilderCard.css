@@ -106,8 +106,23 @@
   z-index: 10;
 }
 
-.header-brand span {
+.header-brand > span:first-child {
   display: block;
+}
+
+.header-goa-year {
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 2px;
+
+  margin: 0;
+  padding: 0;
+}
+
+.header-goa-year span {
+  display: inline-block;
 
   margin: 0;
   padding: 0;
@@ -134,7 +149,7 @@
 
   font-family: "Space Mono", monospace;
 
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 900;
 
   line-height: 0.98;
@@ -171,7 +186,7 @@
 
   font-family: "Space Mono", monospace;
 
-  font-size: 8px;
+  font-size: 10px;
   font-weight: 900;
 
   line-height: 1;
@@ -196,12 +211,17 @@
   top: 57px;
   left: 50%;
 
-  width: 360px;
+  width: 390px;
 
   margin: 0;
   padding: 0;
 
   transform: translateX(-50%);
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 
   font-family:
     "Arial Narrow",
@@ -212,7 +232,7 @@
   font-size: 64px;
   font-weight: 900;
 
-  line-height: 0.82;
+  line-height: 0.78;
 
   letter-spacing: -0.065em;
 
@@ -223,15 +243,128 @@
   z-index: 8;
 }
 
-.header-title > div {
-  display: block;
+
+/* =========================================================
+   TITLE LINE
+========================================================= */
+
+.title-line {
+  position: relative;
+
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  width: 100%;
 
   margin: 0;
   padding: 0;
 
-  height: auto;
+  white-space: nowrap;
+}
 
-  line-height: 0.82;
+
+/* =========================================================
+   INDIVIDUAL LETTERS
+========================================================= */
+
+.title-line span {
+  display: inline-block;
+
+  margin: 0;
+  padding: 0;
+
+  line-height: 0.78;
+
+  transform-origin: center bottom;
+
+  will-change: transform;
+}
+
+
+/* =========================================================
+   HACKER — ARCH
+========================================================= */
+
+/*
+   Outer letters sit slightly lower.
+   Center letters stay higher.
+*/
+
+.title-hacker span:nth-child(1) {
+  transform:
+    translateY(7px)
+    rotate(-5deg);
+}
+
+.title-hacker span:nth-child(2) {
+  transform:
+    translateY(3px)
+    rotate(-3deg);
+}
+
+.title-hacker span:nth-child(3) {
+  transform:
+    translateY(0)
+    rotate(-1deg);
+}
+
+.title-hacker span:nth-child(4) {
+  transform:
+    translateY(0)
+    rotate(1deg);
+}
+
+.title-hacker span:nth-child(5) {
+  transform:
+    translateY(3px)
+    rotate(3deg);
+}
+
+.title-hacker span:nth-child(6) {
+  transform:
+    translateY(7px)
+    rotate(5deg);
+}
+
+
+/* =========================================================
+   HOUSE — ARCH
+========================================================= */
+
+.title-house {
+  margin-top: -2px;
+}
+
+.title-house span:nth-child(1) {
+  transform:
+    translateY(6px)
+    rotate(-5deg);
+}
+
+.title-house span:nth-child(2) {
+  transform:
+    translateY(2px)
+    rotate(-3deg);
+}
+
+.title-house span:nth-child(3) {
+  transform:
+    translateY(0)
+    rotate(0deg);
+}
+
+.title-house span:nth-child(4) {
+  transform:
+    translateY(2px)
+    rotate(3deg);
+}
+
+.title-house span:nth-child(5) {
+  transform:
+    translateY(6px)
+    rotate(5deg);
 }
 
 
@@ -242,8 +375,8 @@
 .header-goa {
   position: absolute;
 
-  right: -2px;
-  bottom: -2px;
+  right: -7px;
+  bottom: 5px;
 
   display: block;
 
