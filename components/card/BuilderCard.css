@@ -560,8 +560,8 @@
   --------------------------------------------------------- */
 
   .header-goa {
-    right: -7px;
-    bottom: 5px;
+    right: 12px;
+    bottom: 25px;
 
     font-size: 13px;
 
@@ -630,8 +630,8 @@
   }
 
   .header-goa {
-    right: -7px;
-    bottom: 5px;
+    right: 12px;
+    bottom: 25px;
 
     text-shadow: none !important;
 
